@@ -12,6 +12,18 @@
       "@shared/*": [
         "src/shared/*"
       ],
+      "@modules/*": [
+        "src/modules/*"
+      ],
+      "@logic/*": [
+        "src/shared/logic/*"
+      ],
+      "@components/*": [
+        "src/shared/components/*"
+      ],
+      "@types/*": [
+        "src/shared/types/*"
+      ]
     },
     "lib": [
       "DOM",

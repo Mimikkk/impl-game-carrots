@@ -20,6 +20,9 @@ dependencies:
   sass:
     specifier: ^1.69.5
     version: 1.69.5
+  solid-icons:
+    specifier: ^1.1.0
+    version: 1.1.0(solid-js@1.8.6)
   solid-js:
     specifier: ^1.8.6
     version: 1.8.6
@@ -1385,6 +1388,14 @@ packages:
   /seroval@0.14.1:
     resolution: {integrity: sha512-ZlC9y1KVDhZFdEHLYZup1RjKDutyX1tt3ffOauqRbRURa2vRr2NU/bHuVEuNEqR3zE2uCU3WM6LqH6Oinc3tWg==}
     engines: {node: '>=10'}
+    dev: false
+
+  /solid-icons@1.1.0(solid-js@1.8.6):
+    resolution: {integrity: sha512-IesTfr/F1ElVwH2E1110s2RPXH4pujKfSs+koT8rwuTAdleO5s26lNSpqJV7D1+QHooJj18mcOiz2PIKs0ic+A==}
+    peerDependencies:
+      solid-js: '*'
+    dependencies:
+      solid-js: 1.8.6
     dev: false
 
   /solid-js@1.8.6:
