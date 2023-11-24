@@ -1,0 +1,36 @@
+{
+  "name": "@zd/carrots",
+  "description": "Carrots - Web port of TerraCards",
+  "author": {
+    "name": "Daniel Zdancewicz",
+    "email": "zdancewicz.daniel@gmail.com",
+    "url": "github.com/mimikkk"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev"
+  },
+  "dependencies": {
+    "@types/node": "^20.10.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "remeda": "^1.29.0",
+    "sass": "^1.69.5",
+    "solid-js": "^1.8.6",
+    "tailwindcss": "^3.3.5",
+    "vite-plugin-solid": "^2.7.2",
+    "zustand": "^4.4.6"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.8",
+    "typescript": "^5.3.2",
+    "vite": "^5.0.2"
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "printWidth": 120,
+    "semi": true,
+    "endOfLine": "crlf",
+    "trailingComma": "all"
+  }
+}
