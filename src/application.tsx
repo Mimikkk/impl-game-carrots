@@ -5,7 +5,7 @@ import { GameInterface } from "@modules/interface/GameInterface.js";
 import { DevelopmentTools } from "@modules/development/DevelopmentTools.js";
 
 export const Application = () => (
-  <main class="w-auto h-auto bg-amber-200">
+  <main class="w-screen h-screen bg-gray-700">
     <GameInterface />
     <GameWorld />
     <DevelopmentTools />
