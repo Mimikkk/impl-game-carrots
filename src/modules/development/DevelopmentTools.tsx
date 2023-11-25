@@ -1,38 +1,43 @@
-import { createSignal, For, type JSXElement } from "solid-js";
+import { createSignal, For, type JSXElement, mergeProps } from "solid-js";
 import { ButtonIcon } from "@components/buttons/ButtonIcon/ButtonIcon.js";
 import type { IconName } from "@components/buttons/Icon/Icon.js";
+import { createSearchString } from "@logic/Search/createSearchString.js";
+import cx from "clsx";
+import { createStorage } from "@logic/Storage/createStorage.js";
 
 export interface TabItem {
   icon?: IconName;
-  id?: string;
+  id: string;
   name: string;
   element: () => JSXElement;
 }
 
 export interface TabProps {
+  id: string;
   tabs: TabItem[];
   default?: string;
-  param?: string;
+  param?: boolean;
 }
 
 export const Tabulator = (props: TabProps) => {
-  const tabIndex = props.default ? props.tabs.findIndex((tab) => (tab.id || tab.name) === props.default) : -1;
-  const [selected, select] = createSignal(tabIndex === -1 ? 0 : tabIndex);
+  const merged = mergeProps({ default: props.tabs[0].id }, props);
 
-  if (props.param) {
-  }
+  const [selected, select] = merged.param
+    ? createSearchString(merged.id, merged.default)
+    : createStorage(merged.id, merged.default);
 
   return (
     <div class="flex gap-2">
       <For each={props.tabs}>
-        {(tab, index) => {
-          return (
-            <div onClick={() => select(index)} class={selected() === index() ? "border" : ""}>
-              <div>{tab.name}</div>
-              <ButtonIcon icon="Tab" square />
-            </div>
-          );
-        }}
+        {(tab) => (
+          <div
+            onClick={() => select(tab.id)}
+            class={cx("border cursor-pointer hover:border-amber-200", selected() === tab.id ? "border-amber-300" : "")}
+          >
+            <div>{tab.name}</div>
+            <ButtonIcon icon="Tab" square />
+          </div>
+        )}
       </For>
     </div>
   );
@@ -54,8 +59,7 @@ export const DevelopmentTools = () => (
     <div style={{ height: `${height()}px` }} class="transition-all">
       <div class="border-t-2 px-4 py-2 flex">
         <Tabulator
-          default="tab-1"
-          param="tab"
+          id="devtool-tab"
           tabs={[
             {
               id: "tab-1",

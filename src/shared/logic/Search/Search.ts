@@ -9,6 +9,9 @@ export namespace Search {
   export const update = (fn: (params: URLSearchParams) => void) =>
     set((params) => {
       fn(params);
+
+      window.history.pushState(null, "", `?${params}`);
+
       return new URLSearchParams(params);
     });
 }
