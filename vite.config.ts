@@ -16,7 +16,7 @@ export default defineConfig({
       "@modules": path.resolve(__dirname, "./src/modules"),
       "@logic": path.resolve(__dirname, "./src/shared/logic"),
       "@components": path.resolve(__dirname, "./src/shared/components"),
-      "@types": path.resolve(__dirname, "./src/shared/types"),
+      "@typing": path.resolve(__dirname, "./src/shared/typing"),
     },
   },
   server: {
