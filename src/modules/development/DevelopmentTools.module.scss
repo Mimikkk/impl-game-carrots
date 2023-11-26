@@ -4,14 +4,15 @@
 
 
   .tabs {
-    .tabulator {
-      &[data-active*="true"] {
-        height: 400px;
-      }
+    &[data-active*="true"] {
+      height: 600px;
+    }
 
-      &[data-active*="false"] {
-        height: 0;
-      }
+    &[data-active*="false"] {
+      height: 0;
+    }
+
+    .tabulator {
 
       @apply border-t-2 px-4 py-2 flex;
     }

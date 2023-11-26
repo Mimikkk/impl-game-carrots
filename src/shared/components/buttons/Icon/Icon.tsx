@@ -1,9 +1,10 @@
 import * as Registry from "solid-icons/cg";
-import type { Strip } from "@shared/types/strip.js";
+import type { Strip } from "@utils/strip.js";
 import type { IconProps as SolidIconProps } from "solid-icons";
 import cx from "clsx";
 import { mergeProps, splitProps } from "solid-js";
 
+export const IconRegistry = Registry;
 export type IconName = Strip<keyof typeof Registry, "Cg">;
 export type IconSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
 

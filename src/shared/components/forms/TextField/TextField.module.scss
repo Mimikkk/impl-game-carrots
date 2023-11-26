@@ -1,0 +1,21 @@
+.field {
+  @apply relative px-2 py-1 border rounded-sm;
+
+  .label {
+    @apply absolute transition-all;
+  }
+
+  &:has(.input:not(:placeholder-shown)) {
+    .label {
+      @apply top-0 -mt-2 -ml-1.5;
+      @apply px-1;
+      @apply bg-slate-950 text-amber-300 text-xs;
+      @apply text-amber-300;
+    }
+  }
+
+  .input {
+    @apply w-full bg-transparent text-white placeholder-white;
+    @apply focus:outline-none focus:border-transparent;
+  }
+}

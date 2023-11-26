@@ -21,8 +21,8 @@
       "@components/*": [
         "src/shared/components/*"
       ],
-      "@typing/*": [
-        "src/shared/typing/*"
+      "@utils/*": [
+        "src/shared/utils/*"
       ]
     },
     "lib": [

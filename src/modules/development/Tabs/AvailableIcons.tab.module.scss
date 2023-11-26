@@ -1,0 +1,28 @@
+.tab {
+  @apply flex flex-col gap-4 justify-center items-center;
+  @apply text-white;
+
+  .search {
+    @apply w-48;
+  }
+
+  .icons {
+    @apply grid grid-cols-6 gap-y-2 gap-x-4;
+    @apply overflow-y-auto h-[400px];
+    @apply overflow-x-hidden content-baseline items-baseline;
+
+    .icon {
+      @apply flex flex-col justify-center items-center;
+      @apply border border-amber-200 border-opacity-0 rounded-sm;
+
+      &:hover {
+        @apply border-opacity-100 bg-slate-800 text-amber-300;
+      }
+
+      .label {
+        @apply text-xs;
+      }
+    }
+  }
+
+}
