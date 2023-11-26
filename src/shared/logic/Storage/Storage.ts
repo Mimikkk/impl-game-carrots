@@ -2,8 +2,6 @@ export namespace Storage {
   export const read = <T>(key: string, fallback: T): T => {
     const value = localStorage.getItem(key);
 
-    console.log(value);
-
     return value === null || value === undefined ? fallback : JSON.parse(value);
   };
 

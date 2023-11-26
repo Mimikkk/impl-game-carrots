@@ -1,4 +1,4 @@
-import { createEffect, createSignal, Show } from "solid-js";
+import { createEffect, createSignal, type Ref, Show } from "solid-js";
 import cx from "clsx";
 import s from "./TextField.module.scss";
 
@@ -8,6 +8,7 @@ export interface TextFieldProps {
   value?: string;
   onChange?: (value: string, event: ChangeEvent) => void;
   class?: string;
+  ref?: Ref<HTMLInputElement>;
 }
 
 const upperFirst = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
@@ -26,6 +27,7 @@ export const TextField = (props: TextFieldProps) => {
         <span class={s.label}>{upperFirst(props.label!)}</span>
       </Show>
       <input
+        ref={props.ref}
         class={s.input}
         placeholder=" "
         value={value()}

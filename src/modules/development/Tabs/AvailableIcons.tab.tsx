@@ -1,8 +1,10 @@
 import { Icon, type IconName, IconRegistry } from "@components/buttons/Icon/Icon.js";
-import { createMemo, createSignal, For } from "solid-js";
+import { createEffect, createMemo, createSignal, For, onMount } from "solid-js";
 import { TextField } from "@components/forms/TextField/TextField.js";
 import { cacheBy } from "@utils/cacheBy.js";
 import s from "./AvailableIcons.tab.module.scss";
+import { create } from "zustand";
+import { Devtools } from "@modules/development/devtools.js";
 
 const names = Object.keys(IconRegistry).map((name) => name.replace("Cg", "") as IconName);
 
@@ -15,9 +17,16 @@ export const AvailableIconsTab = () => {
   const [query, setQuery] = createSignal("");
   const queried = createMemo(() => filtered(query().replace(/ +/g, "").toLowerCase()));
 
+  let ref: HTMLInputElement | undefined = undefined;
+  onMount(() => {
+    if (!ref || !Devtools.active()) return;
+    setQuery("");
+    ref.focus();
+  });
+
   return (
     <div class={s.tab}>
-      <TextField class={s.search} label="search..." value={query()} onChange={setQuery} />
+      <TextField ref={ref} class={s.search} label="search..." value={query()} onChange={setQuery} />
       <div class={s.icons}>
         <For each={queried()}>
           {(name) => (
