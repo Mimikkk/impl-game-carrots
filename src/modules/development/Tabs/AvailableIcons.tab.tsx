@@ -1,5 +1,5 @@
 import { Icon, type IconName, IconRegistry } from "@components/buttons/Icon/Icon.js";
-import { createMemo, createSignal, For, onMount } from "solid-js";
+import { createEffect, createMemo, createSignal, For, onMount } from "solid-js";
 import { TextField } from "@components/forms/TextField/TextField.js";
 import { cacheBy } from "@utils/cacheBy.js";
 import s from "./AvailableIcons.tab.module.scss";
@@ -17,7 +17,7 @@ export const AvailableIconsTab = () => {
   const queried = createMemo(() => filtered(query().replace(/ +/g, "").toLowerCase()));
 
   let ref: HTMLInputElement | undefined = undefined;
-  onMount(() => {
+  createEffect(() => {
     if (!ref || !Devtools.active()) return;
     setQuery("");
     ref.focus();
