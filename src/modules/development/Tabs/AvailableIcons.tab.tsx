@@ -1,9 +1,8 @@
 import { Icon, type IconName, IconRegistry } from "@components/buttons/Icon/Icon.js";
-import { createEffect, createMemo, createSignal, For, onMount } from "solid-js";
+import { createMemo, createSignal, For, onMount } from "solid-js";
 import { TextField } from "@components/forms/TextField/TextField.js";
 import { cacheBy } from "@utils/cacheBy.js";
 import s from "./AvailableIcons.tab.module.scss";
-import { create } from "zustand";
 import { Devtools } from "@modules/development/devtools.js";
 
 const names = Object.keys(IconRegistry).map((name) => name.replace("Cg", "") as IconName);
