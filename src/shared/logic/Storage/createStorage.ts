@@ -5,7 +5,7 @@ import { Storage } from "@logic/Storage/Storage.js";
 export function createStorage<T>(
   name: string,
   initial: T,
-): T extends object ? [Store<T>, SetStoreFunction<T>] : Signal<T> {
+): T extends object ? [Store<T>, SetStoreFunction<T>] : T extends boolean ? Signal<boolean> : Signal<T> {
   const [value, set] =
     typeof initial === "object"
       ? createStore<T extends object ? T : never>(Storage.read(name, initial) as T extends object ? T : never)
@@ -13,5 +13,5 @@ export function createStorage<T>(
 
   createEffect(() => Storage.set(name, typeof value === "function" ? value() : value));
 
-  return [value, set] as T extends object ? [Store<T>, SetStoreFunction<T>] : Signal<T>;
+  return [value, set] as never;
 }
