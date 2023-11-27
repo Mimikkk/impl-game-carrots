@@ -5,7 +5,9 @@
     @apply absolute transition-all;
   }
 
-  &:has(.input:not(:placeholder-shown)) {
+  &:has(.input:not(:placeholder-shown)), &:focus-within {
+    @apply border-amber-200;
+
     .label {
       @apply top-0 -mt-2 -ml-1.5;
       @apply px-1;

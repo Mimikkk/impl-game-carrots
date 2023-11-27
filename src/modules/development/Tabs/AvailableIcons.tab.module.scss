@@ -6,23 +6,15 @@
     @apply w-48;
   }
 
-  .icons {
-    @apply grid grid-cols-6 gap-y-2 gap-x-4;
-    @apply overflow-y-auto h-[400px];
-    @apply overflow-x-hidden content-baseline items-baseline;
+  .container {
+    @apply flex justify-center items-center border rounded-sm;
+
+    &:hover {
+      @apply text-amber-200 bg-slate-800 border-amber-200;
+    }
 
     .icon {
-      @apply flex flex-col justify-center items-center;
-      @apply border border-amber-200 border-opacity-0 rounded-sm;
-
-      &:hover {
-        @apply border-opacity-100 bg-slate-800 text-amber-300;
-      }
-
-      .label {
-        @apply text-xs;
-      }
+      @apply flex flex-col items-center justify-center;
     }
   }
-
 }

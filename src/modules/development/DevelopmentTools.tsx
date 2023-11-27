@@ -9,7 +9,7 @@ const tabs = [
     id: "tab-1",
     name: "Available Icons",
     element: AvailableIconsTab,
-    icon: "Add",
+    icon: "CgAdd",
   },
 ] satisfies TabItem[];
 
@@ -21,7 +21,7 @@ export const DevelopmentTools = () => {
     <div class={s.tools}>
       <div class={s.container}>
         <div class={s.expand}>
-          <ButtonIcon icon="Toolbox" square class={s.expander} onClick={toggle} />
+          <ButtonIcon icon="CgToolbox" square class={s.expander} onClick={toggle} />
         </div>
       </div>
       <div class={s.tabs} data-active={active()}>

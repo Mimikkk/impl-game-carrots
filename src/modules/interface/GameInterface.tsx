@@ -5,7 +5,7 @@ export const GameInterface = () => {
   return (
     <div class="fixed p-4">
       <div>
-        <Icon name="Add" />
+        <Icon name="CgAdd" />
         <div>cash icon</div>
         <div>{gold()}</div>
       </div>

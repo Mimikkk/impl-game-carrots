@@ -11,6 +11,8 @@
     "dev": "vite dev"
   },
   "dependencies": {
+    "@tanstack/solid-virtual": "3.0.0-beta.6",
+    "@tanstack/virtual-core": "3.0.0-alpha.1",
     "@types/node": "^20.10.0",
     "autoprefixer": "^10.4.16",
     "clsx": "^2.0.0",
