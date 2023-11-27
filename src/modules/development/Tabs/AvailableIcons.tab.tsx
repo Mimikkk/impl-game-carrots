@@ -1,17 +1,15 @@
 import { Icon, type IconName, IconRegistry } from "@components/buttons/Icon/Icon.js";
-import { createEffect, createMemo, createSignal } from "solid-js";
+import { createEffect } from "solid-js";
 import { TextField } from "@components/forms/TextField/TextField.js";
 import s from "./AvailableIcons.tab.module.scss";
 import { Devtools } from "@modules/development/devtools.js";
 import { Grid } from "@components/containers/Grid/Grid.js";
+import { createQueryable } from "@utils/search.js";
 
 const names = Object.keys(IconRegistry) as IconName[];
 
-const filtered = (value: string) => names.filter((name) => name.toLowerCase().includes(value));
 export const AvailableIconsTab = () => {
-  const [query, setQuery] = createSignal("");
-
-  const queried = createMemo(() => filtered(query().replace(/ +/g, "").toLowerCase()));
+  const { query, queried, setQuery } = createQueryable(names, { threshold: 0.4, isCaseSensitive: true });
 
   let ref: HTMLInputElement | undefined = undefined;
   createEffect(() => {
