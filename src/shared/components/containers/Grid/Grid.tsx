@@ -12,6 +12,7 @@ export interface GridProps<T> {
   sizes: { width: number; height: number };
   gap?: { x: number; y: number } | number;
   children(item: T, index: number, row: number, column: number): JSX.Element;
+  itemprops?: (item: T, index: number, row: number, column: number) => JSX.HTMLAttributes<HTMLDivElement>;
 }
 
 export const Grid = <T,>(props: GridProps<T>) => {
@@ -38,7 +39,11 @@ export const Grid = <T,>(props: GridProps<T>) => {
                   if (!item) return null;
 
                   return (
-                    <div class={cx("overflow-hidden", merged.itemclass)} style={grid().styles.item(row, column)}>
+                    <div
+                      class={cx("overflow-hidden", merged.itemclass)}
+                      style={grid().styles.item(row, column)}
+                      {...props.itemprops?.(item, index, row.index, column.index)}
+                    >
                       {merged.children(item, index, row.index, column.index)}
                     </div>
                   );

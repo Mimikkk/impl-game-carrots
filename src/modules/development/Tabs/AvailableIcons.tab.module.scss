@@ -13,6 +13,10 @@
       @apply text-amber-200 bg-slate-800 border-amber-200;
     }
 
+    &:active {
+      @apply text-amber-300 bg-slate-900 border-amber-300;
+    }
+
     .icon {
       @apply flex flex-col items-center justify-center;
     }

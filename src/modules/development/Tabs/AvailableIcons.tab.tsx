@@ -1,5 +1,5 @@
 import { Icon, type IconName, IconRegistry } from "@components/buttons/Icon/Icon.js";
-import { createEffect } from "solid-js";
+import { createEffect, createSignal } from "solid-js";
 import { TextField } from "@components/forms/TextField/TextField.js";
 import s from "./AvailableIcons.tab.module.scss";
 import { Devtools } from "@modules/development/devtools.js";
@@ -10,6 +10,7 @@ const names = Object.keys(IconRegistry) as IconName[];
 
 export const AvailableIconsTab = () => {
   const { query, queried, setQuery } = createQueryable(names, { threshold: 0.4, isCaseSensitive: true });
+  const [tooltip, setTooltip] = createSignal<string | null>(null);
 
   let ref: HTMLInputElement | undefined = undefined;
   createEffect(() => {
@@ -21,8 +22,20 @@ export const AvailableIconsTab = () => {
   return (
     <div class={s.tab}>
       <TextField ref={ref} class={s.search} label="search..." value={query()} onChange={setQuery} />
-      <Grid itemclass={s.container} items={queried()} rows={4} columns={8} sizes={{ width: 64, height: 64 }} gap={4}>
-        {(name) => <Icon class={s.icon} name={name} />}
+      <div class="h-6">{tooltip()}</div>
+      <Grid
+        itemprops={(name) => ({
+          onClick: () => navigator.clipboard.writeText(name),
+          onPointerEnter: () => setTooltip(name),
+        })}
+        itemclass={s.container}
+        items={queried()}
+        rows={6}
+        columns={8}
+        sizes={{ width: 64, height: 64 }}
+        gap={4}
+      >
+        {(name) => <Icon class={s.icon} name={name} onPointerEnter={() => setTooltip(name)} />}
       </Grid>
     </div>
   );
