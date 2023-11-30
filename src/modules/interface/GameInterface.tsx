@@ -1,6 +1,7 @@
 import { Icon } from "@components/buttons/Icon/Icon.js";
-import { gold, pay, turn, turnsTillPay } from "@modules/management/management.js";
+import { expenses, income, resources, tax, turn, turnsTillTax } from "@modules/management/management.js";
 import { Number } from "@components/forms/texts/NumberText.js";
+import { Show } from "solid-js";
 
 export const Space = () => <>&nbsp;</>;
 
@@ -13,7 +14,7 @@ export const GameInterface = () => {
             <Icon name="BsDiamondFill" stroke-width={2} class="stroke-amber-100 fill-amber-300" />
           </div>
           <Number class="text-amber-400" bold>
-            {gold()}
+            {resources.gold}
           </Number>
         </div>
         <div class="text-white flex items-center">
@@ -22,13 +23,13 @@ export const GameInterface = () => {
           <Icon name="BsDiamondFill" size="xs" stroke-width={2} class="stroke-amber-100 fill-amber-300" />
           <Space />
           <Number class="text-amber-400" bold>
-            {pay()}
+            {tax()}
           </Number>
           <Space />
           in
           <Space />
           <Number class="text-amber-400" bold>
-            {turnsTillPay()}
+            {turnsTillTax()}
           </Number>
           <Space />
           days
@@ -36,21 +37,69 @@ export const GameInterface = () => {
         <div class="flex flex-col gap-1">
           <div class="flex items-center gap-2">
             <Icon name="TbDroplet" stroke-width={2} class="stroke-amber-100 fill-blue-500" />
-            <Number class="text-xl text-white" bold>
-              {4}
-            </Number>
+            <div class="flex gap-0.5">
+              <Number class="text-xl text-white" bold>
+                {income.water}
+              </Number>
+              <Show when={expenses.water !== 0}>
+                <div class="text-xs self-baseline font-bold">
+                  <Show when={expenses.water < 0}>
+                    <div class="flex text-red-500">
+                      (<Number>{expenses.water}</Number>)
+                    </div>
+                  </Show>
+                  <Show when={expenses.water > 0}>
+                    <div class="flex text-green-500">
+                      (+<Number>{expenses.water}</Number>)
+                    </div>
+                  </Show>
+                </div>
+              </Show>
+            </div>
           </div>
           <div class="flex items-center gap-2">
             <Icon name="TbBolt" stroke-width={2} class="stroke-amber-100 fill-yellow-700" />
-            <Number class="text-xl text-white" bold>
-              {4}
-            </Number>
+            <div class="flex gap-0.5">
+              <Number class="text-xl text-white" bold>
+                {income.power}
+              </Number>
+              <Show when={expenses.power !== 0}>
+                <div class="text-xs self-baseline font-bold">
+                  <Show when={expenses.power < 0}>
+                    <div class="flex text-red-500">
+                      (<Number>{expenses.power}</Number>)
+                    </div>
+                  </Show>
+                  <Show when={expenses.power > 0}>
+                    <div class="flex text-green-500">
+                      (+<Number>{expenses.power}</Number>)
+                    </div>
+                  </Show>
+                </div>
+              </Show>
+            </div>
           </div>
           <div class="flex items-center gap-2">
             <Icon name="TbDroplet" stroke-width={2} class="stroke-amber-100 fill-slate-700" />
-            <Number class="text-xl text-white" bold>
-              {4}
-            </Number>
+            <div class="flex gap-0.5">
+              <Number class="text-xl text-white" bold>
+                {income.oil}
+              </Number>
+              <Show when={expenses.oil !== 0}>
+                <div class="text-xs self-baseline font-bold">
+                  <Show when={expenses.oil < 0}>
+                    <div class="flex text-red-500">
+                      (<Number>{expenses.oil}</Number>)
+                    </div>
+                  </Show>
+                  <Show when={expenses.oil > 0}>
+                    <div class="flex text-green-500">
+                      (+<Number>{expenses.oil}</Number>)
+                    </div>
+                  </Show>
+                </div>
+              </Show>
+            </div>
           </div>
         </div>
       </div>
@@ -66,7 +115,7 @@ export const GameInterface = () => {
             <Icon class="absolute fill-neutral-600 stroke-amber-100 stroke" stroke-width={2} name="BiSolidWrench" />
           </div>
           <Number class="text-red-500 text-xl" bold>
-            {123}
+            {Math.abs(expenses.gold)}
           </Number>
         </div>
         <div class="text-white text-2xl flex gap-2">
