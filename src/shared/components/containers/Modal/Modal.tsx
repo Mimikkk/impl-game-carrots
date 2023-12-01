@@ -1,6 +1,6 @@
 import { Portal } from "solid-js/web";
 import type { JSX } from "solid-js";
-import { createSignal, mergeProps, on, onCleanup, onMount, Show } from "solid-js";
+import { createEffect, mergeProps, on, onCleanup, onMount, Show } from "solid-js";
 import cx from "clsx";
 import s from "./Modal.module.scss";
 import { Modals } from "@components/containers/Modal/modals.js";
@@ -14,12 +14,19 @@ export interface ModalProps {
   onClose?(): void;
 }
 
+const Defer = { defer: true };
 const initial = { default: false } as const;
 export const Modal = (iprops: ModalProps) => {
   const props = mergeProps(initial, iprops);
   const modal = Modals.signal(props.id);
 
-  createSignal(on(modal, (modal) => (modal?.isOpen() ? props.onOpen?.() : props.onClose?.()), { defer: true }));
+  createEffect(
+    on(
+      modal,
+      (modal) => createEffect(on(modal.isOpen, (open) => (open ? props.onOpen?.() : props.onClose?.()), Defer)),
+      Defer,
+    ),
+  );
 
   onMount(() => Modals.attach(props.id, props));
   onCleanup(() => Modals.detach(props.id));
