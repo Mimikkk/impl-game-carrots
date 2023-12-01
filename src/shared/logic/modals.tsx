@@ -16,6 +16,7 @@ export namespace Modal {
   export interface CreateProps {
     default: boolean;
   }
+
   export const create = (props: CreateProps): Modal => {
     const [isOpen, setOpen] = createSignal(props.default);
     const [state, setState] = createStore({});
@@ -39,13 +40,24 @@ export namespace Modal {
       },
     };
   };
+
+  export const empty: Modal = {
+    isOpen: () => false,
+    toggle() {},
+    close() {},
+    open() {},
+    setOpen() {},
+    setState() {},
+    state: {},
+  };
 }
 
 export namespace Modals {
   export const [store, setStore] = createStore<Record<string, Modal>>({});
 
-  export const read = <State extends {}>(id: string): Modal<State> | undefined => store[id];
-  export const signal = <State extends {}>(id: string): Accessor<Modal<State>> => createMemo(() => store[id]);
+  export const read = <State extends {}>(id: string): Modal<State> => store[id] ?? Modal.empty;
+  export const signal = <State extends {}>(id: string): Accessor<Modal<State>> =>
+    createMemo(() => store[id] ?? Modal.empty);
 
   export interface AttachProps {
     default: boolean;
