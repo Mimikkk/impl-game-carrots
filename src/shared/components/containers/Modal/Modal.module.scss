@@ -1,0 +1,7 @@
+.modal {
+  @apply absolute inset-0 flex items-center justify-center;
+
+  .background {
+    @apply absolute inset-0 bg-black opacity-30;
+  }
+}

@@ -15,36 +15,36 @@ export interface GridProps<T> {
   itemprops?: (item: T, index: number, row: number, column: number) => JSX.HTMLAttributes<HTMLDivElement>;
 }
 
-export const Grid = <T,>(props: GridProps<T>) => {
-  const merged = mergeProps({ columns: 1 }, props, {
+export const Grid = <T,>(iprops: GridProps<T>) => {
+  const props = mergeProps({ columns: 1 }, iprops, {
     gap: {
-      x: typeof props.gap === "number" ? props.gap : props.gap?.x ?? 0,
-      y: typeof props.gap === "number" ? props.gap : props.gap?.y ?? 0,
+      x: typeof iprops.gap === "number" ? iprops.gap : iprops.gap?.x ?? 0,
+      y: typeof iprops.gap === "number" ? iprops.gap : iprops.gap?.y ?? 0,
     },
   });
 
   let ref: HTMLDivElement = undefined!;
-  const grid = createGrid(mergeProps({ ref: () => ref }, merged));
+  const grid = createGrid(mergeProps({ ref: () => ref }, props));
 
   return (
-    <div class={merged.class}>
+    <div class={props.class}>
       <div ref={ref} style={grid().styles.container}>
         <div style={grid().styles.list}>
           <For each={grid().rows.items}>
             {(row) => (
               <For each={grid().columns.items}>
                 {(column) => {
-                  let index = row.index * merged.columns + column.index;
-                  const item = merged.items[index];
+                  let index = row.index * props.columns + column.index;
+                  const item = props.items[index];
                   if (!item) return null;
 
                   return (
                     <div
-                      class={cx("overflow-hidden", merged.itemclass)}
+                      class={cx("overflow-hidden", props.itemclass)}
                       style={grid().styles.item(row, column)}
-                      {...props.itemprops?.(item, index, row.index, column.index)}
+                      {...iprops.itemprops?.(item, index, row.index, column.index)}
                     >
-                      {merged.children(item, index, row.index, column.index)}
+                      {props.children(item, index, row.index, column.index)}
                     </div>
                   );
                 }}
@@ -54,7 +54,7 @@ export const Grid = <T,>(props: GridProps<T>) => {
         </div>
       </div>
       <span>
-        Total: <span class="text-amber-300">{merged.items.length}</span>
+        Total: <span class="text-amber-300">{props.items.length}</span>
       </span>
     </div>
   );

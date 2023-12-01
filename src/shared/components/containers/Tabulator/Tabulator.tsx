@@ -23,12 +23,12 @@ export interface TabulatorProps {
   param?: boolean;
 }
 
-export const Tabulator = (props: TabulatorProps) => {
-  const merged = mergeProps({ default: props.tabs[0].id }, props);
+export const Tabulator = (iprops: TabulatorProps) => {
+  const props = mergeProps({ default: iprops.tabs[0].id }, iprops);
 
-  const [selected, select] = merged.param
-    ? createSearchString(merged.id, merged.default)
-    : createStorage(merged.id, merged.default);
+  const [selected, select] = props.param
+    ? createSearchString(props.id, props.default)
+    : createStorage(props.id, props.default);
 
   return (
     <div class={cx(s.tabulator, props.class)}>

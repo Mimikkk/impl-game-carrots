@@ -12,7 +12,7 @@ export const Button = (props: ButtonProps) => {
     <button
       {...props}
       class={cx(
-        "bg-slate-800 border-4 border-slate-500 flex items-center justify-center rounded-sm hover:border-slate-400 hover:bg-slate-700 active:border-slate-600 active:bg-slate-950",
+        "bg-slate-800 shadow-md shadow-slate-800 border-4 border-slate-500 flex items-center justify-center rounded-sm hover:border-slate-400 hover:bg-slate-700 active:border-slate-600 active:bg-slate-950",
         props.class,
       )}
     >
