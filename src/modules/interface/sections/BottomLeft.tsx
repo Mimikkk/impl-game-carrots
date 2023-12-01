@@ -1,6 +1,6 @@
 import { Icon } from "@components/buttons/Icon/Icon.js";
 import { Number } from "@components/texts/NumberText.js";
-import { expenses, turn } from "@modules/management/management.js";
+import { expense, turn } from "@modules/management/management.js";
 
 interface Props {
   class?: string;
@@ -20,7 +20,7 @@ export const BottomLeft = (props: Props) => {
           <Icon class="absolute fill-neutral-600 stroke-amber-100 stroke" stroke-width={2} name="BiSolidWrench" />
         </div>
         <Number class="text-red-500 text-xl" bold>
-          {Math.abs(expenses.gold)}
+          {Math.abs(expense.gold)}
         </Number>
       </div>
       <div class="text-white text-2xl flex gap-2">

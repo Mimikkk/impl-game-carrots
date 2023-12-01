@@ -1,7 +1,11 @@
-import { createMemo, createSignal } from "solid-js";
+import { createEffect, createMemo, createSignal, on } from "solid-js";
 import { createStore } from "solid-js/store";
 
+export type ResourceType = "water" | "power" | "gold" | "oil";
+
 export const [turn, setTurn] = createSignal(1);
+export const nextTurn = () => setTurn((v) => v + 1);
+
 export const [turnsTillTax, setTurnsTillTax] = createSignal(9);
 export const [tax, setTax] = createSignal(24);
 
@@ -14,6 +18,10 @@ export const [resources, setResources] = createStore({
   oil: 0,
 });
 
+const getGoldIncome = createMemo(() => 4);
+const getPowerIncome = createMemo(() => 1);
+const getWaterIncome = createMemo(() => 12);
+const getOilIncome = createMemo(() => 3);
 export const [income, setIncome] = createStore({
   get water() {
     return getWaterIncome();
@@ -29,12 +37,26 @@ export const [income, setIncome] = createStore({
   },
 });
 
-const getGoldIncome = createMemo(() => 4);
-const getPowerIncome = createMemo(() => 2);
-const getWaterIncome = createMemo(() => 12);
-const getOilIncome = createMemo(() => 4);
+createEffect(
+  on(
+    [turn],
+    () => {
+      setResources((resources) => ({
+        water: resources.water + balance.water,
+        power: resources.power + balance.power,
+        gold: resources.gold + balance.gold,
+        oil: resources.oil + balance.oil,
+      }));
+    },
+    { defer: true },
+  ),
+);
 
-export const [expenses, setExpenses] = createStore({
+const getGoldExpenses = createMemo(() => 12 + maintenance());
+const getPowerExpenses = createMemo(() => 2);
+const getWaterExpenses = createMemo(() => 11);
+const getOilExpenses = createMemo(() => 4);
+export const [expense, setExpenses] = createStore({
   get water() {
     return getWaterExpenses();
   },
@@ -49,7 +71,21 @@ export const [expenses, setExpenses] = createStore({
   },
 });
 
-const getGoldExpenses = createMemo(() => -12 - maintenance());
-const getPowerExpenses = createMemo(() => 2);
-const getWaterExpenses = createMemo(() => 12);
-const getOilExpenses = createMemo(() => -4);
+const getGoldBalance = createMemo(() => income.gold - expense.gold);
+const getPowerBalance = createMemo(() => income.power - expense.power);
+const getWaterBalance = createMemo(() => income.water - expense.water);
+const getOilBalance = createMemo(() => income.oil - expense.oil);
+export const balance = {
+  get water() {
+    return getGoldBalance();
+  },
+  get power() {
+    return getPowerBalance();
+  },
+  get gold() {
+    return getGoldBalance();
+  },
+  get oil() {
+    return getOilBalance();
+  },
+};
