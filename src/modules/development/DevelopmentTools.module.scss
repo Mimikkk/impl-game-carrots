@@ -29,14 +29,6 @@
       @apply bg-slate-950 p-1 rounded-l;
 
       @apply border-t-2 border-l-2;
-
-      .expander {
-        @apply text-white rounded-full transition-all;
-
-        &:hover {
-          @apply text-amber-100 bg-slate-400;
-        }
-      }
     }
   }
 

@@ -7,7 +7,7 @@
   }
 
   .container {
-    @apply flex justify-center items-center border rounded-sm;
+    @apply flex justify-center items-center border rounded-sm transition-all;
 
     &:hover {
       @apply text-amber-200 bg-slate-800 border-amber-200;

@@ -1,5 +1,6 @@
-import { type Accessor, createMemo, createSignal } from "solid-js";
+import { type Accessor, createMemo, createSignal, on } from "solid-js";
 import { createStore, reconcile } from "solid-js/store";
+import { Defer } from "@utils/constants.js";
 
 export interface Modal<State extends {} = any> {
   state: State;
@@ -29,16 +30,19 @@ export namespace Modal {
         else setOpen((open) => !open);
       },
       open(state) {
-        if (state) setState(reconcile(state));
+        if (state) setState(state);
         setOpen(true);
       },
-      close: () => setOpen(false),
+      close: () => {
+        setState(reconcile({}));
+        return setOpen(false);
+      },
     };
   };
 }
 
 export namespace Modals {
-  const [store, setStore] = createStore<Record<string, Modal>>({});
+  export const [store, setStore] = createStore<Record<string, Modal>>({});
 
   export const read = <State extends {}>(id: string): Modal<State> | undefined => store[id];
   export const signal = <State extends {}>(id: string): Accessor<Modal<State>> => createMemo(() => store[id]);
@@ -59,4 +63,11 @@ export namespace Modals {
     modal.setOpen(false);
     setStore(id, undefined!);
   };
+
+  const [shouldUpdate, setUpdate] = createSignal(false);
+  export const update = () => setUpdate((value) => !value);
+
+  export const isSomeOpen = createMemo(
+    on(shouldUpdate, () => Object.values(Modals.store).some((modal) => modal.isOpen()), Defer),
+  );
 }

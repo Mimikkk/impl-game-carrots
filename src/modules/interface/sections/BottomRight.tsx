@@ -9,7 +9,7 @@ interface Props {
 export const BottomRight = (props: Props) => {
   return (
     <section class={props.class}>
-      <Button class="w-36 h-36 border-8" onClick={() => nextTurn()}>
+      <Button class="w-36 h-36 !border-8" onClick={() => nextTurn()}>
         <Icon name="TbArrowBigRightLine" stroke-width={2} size="2xl" class="stroke-amber-100 fill-amber-700" />
       </Button>
     </section>
