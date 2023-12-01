@@ -1,6 +1,7 @@
 import type { JSX } from "solid-js";
 import { mergeProps } from "solid-js";
 import cx from "clsx";
+import s from "./Button.module.scss";
 
 export interface ButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {}
 
@@ -9,13 +10,7 @@ export const Button = (props: ButtonProps) => {
   props = mergeProps(initial, props);
 
   return (
-    <button
-      {...props}
-      class={cx(
-        "bg-slate-800 shadow-md shadow-slate-800 border-4 border-slate-500 flex items-center justify-center rounded-sm hover:border-slate-400 hover:bg-slate-700 active:border-slate-600 active:bg-slate-950",
-        props.class,
-      )}
-    >
+    <button {...props} class={cx(s.button, props.class)}>
       {props.children}
     </button>
   );

@@ -1,0 +1,13 @@
+.button {
+  @apply flex items-center justify-center;
+  @apply border-4 border-slate-500 bg-slate-800 rounded-sm;
+  @apply shadow-md shadow-slate-800;
+
+  &:hover {
+    @apply border-slate-400 bg-slate-700;
+  }
+
+  &:active {
+    @apply border-slate-600 bg-slate-950
+  }
+}
