@@ -4,7 +4,7 @@ import { balance, resources, type ResourceType, tax, turnsTillTax } from "@modul
 import { type JSX, Show } from "solid-js";
 import { Space } from "@components/texts/Space.js";
 import { Modal } from "@components/containers/Modal/Modal.js";
-import { Modals } from "@components/containers/Modal/modals.js";
+import { Modals } from "@logic/modals.js";
 
 interface ResourceCounterProps {
   resource: ResourceType;

@@ -3,7 +3,7 @@ import type { JSX } from "solid-js";
 import { createEffect, mergeProps, on, onCleanup, onMount, Show } from "solid-js";
 import cx from "clsx";
 import s from "./Modal.module.scss";
-import { Modals } from "@components/containers/Modal/modals.js";
+import { Modals } from "@logic/modals.js";
 
 export interface ModalProps {
   id: string;
