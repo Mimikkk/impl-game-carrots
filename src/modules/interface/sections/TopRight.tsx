@@ -29,13 +29,21 @@ export const TopRight = (props: Props) => {
         <Button square class={cx(landMode() && "!border-amber-600")} onClick={() => toggleLandMode()}>
           <LandIcon />
         </Button>
-        <Button square class={cx(market().isOpen() && "!border-amber-300")} onClick={() => market().open()}>
+        <Button
+          square
+          class={cx(market().isOpen() && "!border-amber-300")}
+          onClick={(event) => market().open({ event })}
+        >
           <GoldIcon />
         </Button>
-        <Button square class={cx(deck().isOpen() && "!border-amber-300")} onClick={() => deck().open()}>
+        <Button square class={cx(deck().isOpen() && "!border-amber-300")} onClick={(event) => deck().open({ event })}>
           <DeckIcon />
         </Button>
-        <Button square class={cx(effects().isOpen() && "!border-amber-300")} onClick={() => effects().open()}>
+        <Button
+          square
+          class={cx(effects().isOpen() && "!border-amber-300")}
+          onClick={(event) => effects().open({ event })}
+        >
           <EffectIcon />
         </Button>
       </div>

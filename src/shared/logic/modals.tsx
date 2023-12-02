@@ -1,15 +1,20 @@
-import { type Accessor, createMemo, createSignal, on } from "solid-js";
+import { type Accessor, createEffect, createMemo, createSignal, on } from "solid-js";
 import { createStore, reconcile } from "solid-js/store";
 import { Defer } from "@utils/constants.js";
 
 export interface Modal<State extends {} = any> {
+  parent: Accessor<HTMLElement>;
   state: State;
   setState(state: State): void;
   isOpen(): boolean;
   setOpen(open: boolean): void;
-  open(with_?: State): void;
+  open(options?: OpenOptions<State>): void;
   toggle(open?: any): void;
   close(): void;
+}
+interface OpenOptions<State> {
+  event?: MouseEvent;
+  with_?: State;
 }
 
 export namespace Modal {
@@ -20,8 +25,10 @@ export namespace Modal {
   export const create = (props: CreateProps): Modal => {
     const [isOpen, setOpen] = createSignal(props.default);
     const [state, setState] = createStore({});
+    const [parent, setParent] = createSignal<HTMLElement>(undefined!);
 
     return {
+      parent,
       state,
       setState,
       isOpen,
@@ -31,10 +38,11 @@ export namespace Modal {
         else setOpen((open) => !open);
       },
       open(state) {
-        if (state) setState(state);
+        if (state?.with_) setState(state);
+        if (state?.event) setParent(state.event.currentTarget as HTMLElement);
         setOpen(true);
       },
-      close: () => {
+      close() {
         setState(reconcile({}));
         return setOpen(false);
       },
@@ -42,6 +50,7 @@ export namespace Modal {
   };
 
   export const empty: Modal = {
+    parent: () => undefined!,
     isOpen: () => false,
     toggle() {},
     close() {},
@@ -67,7 +76,6 @@ export namespace Modals {
 
     setStore(id, Modal.create(props));
   };
-
   export const detach = (id: string) => {
     let modal = store[id];
     if (!modal) throw Error(`Modal with id '${id}' does not exist`);
