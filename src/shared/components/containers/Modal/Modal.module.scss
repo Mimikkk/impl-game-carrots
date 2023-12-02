@@ -4,4 +4,28 @@
   .background {
     @apply absolute inset-0 bg-black opacity-30;
   }
+
+  .container {
+    @apply absolute shadow-md shadow-slate-950 min-w-[300px] w-full max-w-[600px];
+
+    .card {
+      @apply h-full transition-all;
+      @apply flex flex-col gap-1 rounded-t-md rounded-b-sm;
+      @apply border-t-4 border-2 border-slate-300;
+      @apply bg-slate-950;
+
+      &:hover, &:focus-within {
+        @apply border-amber-200;
+      }
+    }
+
+    .header {
+      @apply flex justify-between pt-1 pb-0.5 px-2 gap-2;
+      @apply bg-gradient-to-b from-slate-800 to-slate-950;
+    }
+
+    .content {
+      @apply px-2;
+    }
+  }
 }

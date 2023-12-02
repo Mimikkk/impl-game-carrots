@@ -47,7 +47,7 @@ export const TopRight = (props: Props) => {
           <EffectIcon />
         </Button>
       </div>
-      <Modal title="Market" id={modals.market}>
+      <Modal title="Market" id={modals.market} default>
         Content
       </Modal>
       <Modal title="Deck" id={modals.deck}>
