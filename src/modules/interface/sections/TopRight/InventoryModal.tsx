@@ -6,131 +6,81 @@ import { Number } from "@components/texts/NumberText.js";
 import { Modal } from "@components/containers/Modal/Modal.js";
 import { Item } from "@modules/interface/sections/TopRight/item.js";
 import { createQueryable } from "@utils/search.js";
+import { createMemo, createSignal } from "solid-js";
+import cx from "clsx";
+import s from "./InventoryModal.module.scss";
 
 const items: Item[] = [
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
-  Item.create("land", "Island", 2341231232),
+  Item.create("land", "Island Island Island Island", 2341231232, 17),
+  Item.create("land", "Island", 2341231232, 34),
+  Item.create("land", "Island", 2341231232, 72),
 ];
 
-export const InventoryModal = () => {
-  const { query, queried, setQuery } = createQueryable(items, {
-    threshold: 0.4,
-    isCaseSensitive: true,
-    keys: ["name"],
-  });
+const { query, queried, setQuery } = createQueryable(items, {
+  threshold: 0.4,
+  isCaseSensitive: true,
+  keys: ["name"],
+});
+const [selected, select] = createSignal<null | Item>(null);
+
+export const InventoryModal = () => (
+  <Modal title="Inventory" id={InventoryModal.name} default>
+    <div class="center gap-4">
+      <InventoryControls />
+      <Grid
+        class="border rounded-sm box-content p-3"
+        itemclass="overflow-visible"
+        gap={12}
+        items={queried()}
+        rows={4}
+        columns={4}
+        sizes={{ height: 64, width: 96 }}
+        after={InventoryAfter}
+        children={InventoryItem}
+      />
+    </div>
+  </Modal>
+);
+
+const InventoryItem = (item: Item) => (
+  <div onClick={() => select(item)} data-selected={selected() === item} class={s.item}>
+    <span title={item.name} class={s.label}>
+      {item.name}
+    </span>
+    <Number title={`${item.value}`} class={s.price}>
+      {item.value}
+    </Number>
+    <LandIcon />
+    <Number title={`${item.count}`} class={s.count}>
+      {item.count}
+    </Number>
+  </div>
+);
+const InventoryControls = () => (
+  <div class="flex flex-col self-baseline gap-4">
+    <TextField label="search..." value={query()} onChange={setQuery} />
+    <Button class="w-full">Sell all</Button>
+  </div>
+);
+const InventoryAfter = (items: Item[]) => {
+  const total = createMemo(() => items.reduce((total, item) => total + item.count * item.value, 0));
+  const types = createMemo(() => items.length);
+  const worth = createMemo(() => items.reduce((total, item) => total + item.count, 0));
 
   return (
-    <Modal title="Inventory" id={InventoryModal.name} default>
-      <div class="center gap-4">
-        <div class="flex flex-col self-baseline gap-4">
-          <TextField label="search..." value={query()} onChange={setQuery} />
-          <Button class="w-full">Sell all</Button>
-        </div>
-        <Grid
-          class="border rounded-sm box-content p-2"
-          itemclass="border rounded overflow-visible"
-          gap={12}
-          items={queried()}
-          rows={4}
-          columns={6}
-          sizes={{ height: 64, width: 64 }}
-          after={(items) => {
-            return (
-              <div class="flex gap-2">
-                <span class="flex gap-2">
-                  <span>Total worth:</span>
-                  <Number class="text-amber-200">{items.reduce((total, item) => total + item.count, 0)}</Number>
-                </span>
-              </div>
-            );
-          }}
-        >
-          {(item) => (
-            <div class="relative full center">
-              <span>
-                <LandIcon />
-              </span>
-              <Number class="abr-0 border bg-black -m-1.5 h-5 rounded-sm center px-1">{item.count}</Number>
-            </div>
-          )}
-        </Grid>
+    <div class={s.after}>
+      <div class={s.keyvalue}>
+        <span>Total:</span>
+        <Number class={s.value}>{total()}</Number>
       </div>
-    </Modal>
+      <div class={s.keyvalue}>
+        <span>Types:</span>
+        <Number class={s.value}>{types()}</Number>
+      </div>
+      <div class={cx(s.keyvalue, "ml-auto")}>
+        <span>Worth:</span>
+        <Number class={s.value}>{worth()}</Number>
+      </div>
+    </div>
   );
 };
