@@ -5,6 +5,7 @@ import { createGrid } from "@components/containers/Grid/createGrid.js";
 
 export interface GridProps<T> {
   class?: string;
+  containerclass?: string;
   itemclass?: string;
   rows: number;
   columns?: number;
@@ -27,8 +28,8 @@ export const Grid = <T,>(iprops: GridProps<T>) => {
   const grid = createGrid(mergeProps({ ref: () => ref }, props));
 
   return (
-    <div class={props.class}>
-      <div ref={ref} style={grid().styles.container}>
+    <div class={props.containerclass}>
+      <div ref={ref} style={grid().styles.container} class={props.class}>
         <div style={grid().styles.list}>
           <For each={grid().rows.items}>
             {(row) => (

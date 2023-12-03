@@ -43,7 +43,7 @@ export const ButtonIcon = (props: ButtonIconProps) => {
   return (
     <button
       class={cx(
-        "flex justify-center items-center gap-2 rounded-full aspect-square hover:bg-slate-500 text-white transition-all hover:text-amber-100",
+        "center gap-2 rounded-full aspect-square hover:bg-slate-500 text-white transition-all hover:text-amber-100",
         classBySize(managed.size),
         classBySquare(managed.square),
         managed.class,

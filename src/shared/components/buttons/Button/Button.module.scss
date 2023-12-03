@@ -4,7 +4,7 @@
   @apply shadow-md shadow-slate-800;
   @apply transition-all;
 
-  &:hover, &:focus, &:focus-within {
+  &:hover, &:focus-visible {
     @apply border-amber-400 bg-slate-700;
   }
 
