@@ -14,10 +14,18 @@ export interface GridProps<T> {
   gap?: { x: number; y: number } | number;
   children(item: T, index: number, row: number, column: number): JSX.Element;
   itemprops?: (item: T, index: number, row: number, column: number) => JSX.HTMLAttributes<HTMLDivElement>;
+  after?: (items: T[]) => JSX.Element;
 }
 
+const After = (items: unknown[]) => (
+  <div>
+    Total: <span class="text-amber-300">{items.length}</span>
+  </div>
+);
+
+const initial = { columns: 1, after: After } as const;
 export const Grid = <T,>(props: GridProps<T>) => {
-  const $ = mergeProps({ columns: 1 }, props, {
+  const $ = mergeProps(initial, props, {
     gap: {
       x: typeof props.gap === "number" ? props.gap : props.gap?.x ?? 0,
       y: typeof props.gap === "number" ? props.gap : props.gap?.y ?? 0,
@@ -54,9 +62,7 @@ export const Grid = <T,>(props: GridProps<T>) => {
           </For>
         </div>
       </div>
-      <span>
-        Total: <span class="text-amber-300">{$.items.length}</span>
-      </span>
+      {$.after?.($.items)}
     </div>
   );
 };

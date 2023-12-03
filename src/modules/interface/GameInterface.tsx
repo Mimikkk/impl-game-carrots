@@ -1,6 +1,6 @@
 import { TopLeft } from "./sections/TopLeft.js";
 import { BottomLeft } from "./sections/BottomLeft.js";
-import { TopRight } from "./sections/TopRight.js";
+import { TopRight } from "./sections/TopRight/TopRight.js";
 import { BottomRight } from "./sections/BottomRight.js";
 
 export const GameInterface = () => (
