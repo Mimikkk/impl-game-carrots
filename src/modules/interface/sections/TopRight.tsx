@@ -5,6 +5,8 @@ import { Modals } from "@logic/modals.js";
 import { createSignal } from "solid-js";
 import { DeckIcon, EffectIcon, GoldIcon, LandIcon } from "@shared/logic-components/icons/Icons.js";
 import { Grid } from "@components/containers/Grid/Grid.js";
+import { TextField } from "@components/forms/TextField/TextField.js";
+import { Number } from "@components/texts/NumberText.js";
 
 interface Item {
   type: string;
@@ -61,12 +63,15 @@ export const TopRight = (props: Props) => {
       </div>
       <Modal title="Inventory" id={modals.Inventory} default>
         <div class="center gap-4">
-          <Button class="w-full" />
+          <div class="flex flex-col self-baseline gap-4">
+            <TextField label="search..."></TextField>
+            <Button class="w-full">Sell all</Button>
+          </div>
           <Grid
-            class="border box-content p-2"
-            itemclass="border"
+            class="border rounded-sm box-content p-2"
+            itemclass="border rounded overflow-visible"
             gap={4}
-            items={[Item.create("land", "Island", 4)]}
+            items={[Item.create("land", "Island", 2341231232)]}
             rows={4}
             columns={6}
             sizes={{ height: 64, width: 64 }}
@@ -76,7 +81,7 @@ export const TopRight = (props: Props) => {
                 <span>
                   <LandIcon />
                 </span>
-                <div class="abr-0 border w-4 h-4 center">{item.count}</div>
+                <Number class="abr-0 border bg-black -m-1.5 h-5 rounded-sm center">{item.count}</Number>
               </div>
             )}
           </Grid>

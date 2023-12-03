@@ -31,11 +31,11 @@ const classBySize = (size: ButtonProps["size"]) => {
 
 const initial = { size: "md", type: "button" } as const;
 export const Button = (props: ButtonProps) => {
-  props = mergeProps(initial, props);
+  const $ = mergeProps(initial, props);
 
   return (
-    <button {...props} class={cx(s.button, classBySize(props.size), props.square && "aspect-square", props.class)}>
-      {props.children}
+    <button {...$} class={cx(s.button, classBySize($.size), $.square && "aspect-square", $.class)}>
+      {$.children}
     </button>
   );
 };

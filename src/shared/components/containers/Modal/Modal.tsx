@@ -19,33 +19,33 @@ export interface ModalProps {
 }
 
 const initial = { default: false } as const;
-export const Modal = (iprops: ModalProps) => {
-  const props = mergeProps(initial, iprops);
-  const modal = Modals.signal(props.id);
+export const Modal = (props: ModalProps) => {
+  const $ = mergeProps(initial, props);
+  const modal = Modals.signal($.id);
 
-  onMount(() => Modals.attach(props.id, props));
-  onCleanup(() => Modals.detach(props.id));
+  onMount(() => Modals.attach($.id, $));
+  onCleanup(() => Modals.detach($.id));
 
   const Content = () => {
     onMount(() => {
-      props.onOpen?.();
+      $.onOpen?.();
       Modals.update();
 
       createListener("keydown", ({ key }) => key === "Escape" && modal().close());
     });
     onCleanup(() => {
-      props.onClose?.();
+      $.onClose?.();
       Modals.update();
       modal().parent()?.focus();
     });
 
     return (
-      <div inert={false} role="dialog" aria-modal="true" class={cx(s.modal, s[props.size!])}>
+      <div inert={false} role="dialog" aria-modal="true" class={cx(s.modal, s[$.size!])}>
         <div onClick={() => modal()?.close()} class={s.background} />
-        <div class={cx(s.container, props.class)}>
+        <div class={cx(s.container, $.class)}>
           <div class={s.card}>
             <div class={s.header}>
-              <span class="font-bold text-slate-200">{props.title}</span>
+              <span class="font-bold text-slate-200">{$.title}</span>
               <ButtonIcon
                 icon="OcX"
                 class="text-slate-200"
@@ -56,7 +56,7 @@ export const Modal = (iprops: ModalProps) => {
               />
             </div>
             <div class={s.content}>
-              <div class="text-white">{props.children}</div>
+              <div class="text-white">{$.children}</div>
             </div>
           </div>
         </div>

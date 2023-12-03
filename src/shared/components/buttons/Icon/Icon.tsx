@@ -84,8 +84,8 @@ const classBySize = (size?: IconSize) => {
 
 const initial = { size: "md" } as const;
 export const Icon = (props: IconProps) => {
-  const [icon, rest] = splitProps(mergeProps(initial, props), ["size", "class"]);
+  const [$, rest] = splitProps(mergeProps(initial, props), ["size", "class"]);
   const Element = IconRegistry[props.name];
 
-  return <Element class={cx(classBySize(icon.size), icon.class)} {...rest} />;
+  return <Element class={cx(classBySize($.size), $.class)} {...rest} />;
 };

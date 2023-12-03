@@ -1,9 +1,11 @@
 import type { JSX } from "solid-js";
+import { mergeProps } from "solid-js";
 import cx from "clsx";
 
 export interface NumberTextProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, "children"> {
   children: number;
   bold?: boolean;
+  precision?: number;
 }
 
 const intl = new Intl.NumberFormat("en-US", {
@@ -12,8 +14,13 @@ const intl = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 3,
 });
 
-export const Number = (props: NumberTextProps) => (
-  <div {...props} class={cx(props.bold ? "font-bold" : undefined, props.class)}>
-    <span>{props.children > 1e10 ? intl.format(props.children) : props.children}</span>
-  </div>
-);
+const initial = { precision: 3 } as const;
+export const Number = (props: NumberTextProps) => {
+  const $ = mergeProps(initial, props);
+
+  return (
+    <div title={`${$.children}`} {...$} class={cx($.bold ? "font-bold" : undefined, $.class)}>
+      <span>{$.children > $.precision ? intl.format($.children) : $.children}</span>
+    </div>
+  );
+};

@@ -23,28 +23,23 @@ export interface TabulatorProps {
   param?: boolean;
 }
 
-export const Tabulator = (iprops: TabulatorProps) => {
-  const props = mergeProps({ default: iprops.tabs[0].id }, iprops);
+export const Tabulator = (props: TabulatorProps) => {
+  const $ = mergeProps({ default: props.tabs[0].id }, props);
 
-  const [selected, select] = props.param
-    ? createSearchString(props.id, props.default)
-    : createStorage(props.id, props.default);
+  const [selected, select] = $.param ? createSearchString($.id, $.default) : createStorage($.id, $.default);
 
   return (
-    <div class={cx(s.tabulator, props.class)}>
-      <div class={cx(s.nav, props.navclass)}>
-        <For each={props.tabs}>
+    <div class={cx(s.tabulator, $.class)}>
+      <div class={cx(s.nav, $.navclass)}>
+        <For each={$.tabs}>
           {(tab) => (
-            <div
-              onClick={() => select(tab.id)}
-              class={cx(s.navtab, props.tabclass, selected() === tab.id && s.selected)}
-            >
+            <div onClick={() => select(tab.id)} class={cx(s.navtab, $.tabclass, selected() === tab.id && s.selected)}>
               <div class={cx(s.text, selected() === tab.id && s.selected)}>{tab.name}</div>
             </div>
           )}
         </For>
       </div>
-      {props.tabs.find((tab) => tab.id === selected())?.element()}
+      {$.tabs.find((tab) => tab.id === selected())?.element()}
     </div>
   );
 };

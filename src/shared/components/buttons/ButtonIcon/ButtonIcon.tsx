@@ -38,20 +38,20 @@ const classBySquare = (square?: boolean) => (square ? "aspect-square" : undefine
 const keys = ["iconsize", "iconclass", "icon", "size", "class", "children", "square"] as const;
 const initial = { size: "md", iconsize: "xs" } as const;
 export const ButtonIcon = (props: ButtonIconProps) => {
-  const [managed, rest] = splitProps(mergeProps(initial, props), keys);
+  const [$, rest] = splitProps(mergeProps(initial, props), keys);
 
   return (
     <button
       class={cx(
         "center gap-2 rounded-full aspect-square hover:bg-slate-500 text-white transition-all hover:text-amber-100",
-        classBySize(managed.size),
-        classBySquare(managed.square),
-        managed.class,
+        classBySize($.size),
+        classBySquare($.square),
+        $.class,
       )}
       {...rest}
     >
-      <Icon name={managed.icon} class={managed.iconclass} size={managed.iconsize} />
-      {managed.children}
+      <Icon name={$.icon} class={$.iconclass} size={$.iconsize} />
+      {$.children}
     </button>
   );
 };
