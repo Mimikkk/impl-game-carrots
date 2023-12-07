@@ -22,10 +22,7 @@ export namespace Processors {
     },
   ];
 
-  const [initialize, restart_] = EntityManager.create(prototypes, (items) => {
+  export let [mill, oven] = EntityManager.create(prototypes, (items) => {
     [mill, oven] = items;
   });
-
-  export const restart = restart_;
-  export let [mill, oven] = initialize();
 }

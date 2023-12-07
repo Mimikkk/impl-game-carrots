@@ -58,10 +58,7 @@ export namespace Recipes {
     },
   ];
 
-  const [initialize, restart_] = EntityManager.create(prototypes, (items) => {
+  export let [flour, tortilla] = EntityManager.create(prototypes, (items) => {
     [flour, tortilla] = items;
   });
-
-  export const restart = restart_;
-  export let [flour, tortilla] = initialize();
 }

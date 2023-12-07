@@ -29,10 +29,7 @@ export namespace Currencies {
     },
   ];
 
-  const [initialize, restart_] = EntityManager.create(prototypes, (items) => {
+  export let [gold, water, oil, power] = EntityManager.create(prototypes, (items) => {
     [gold, water, oil, power] = items;
   });
-
-  export const restart = restart_;
-  export let [gold, water, oil, power] = initialize();
 }

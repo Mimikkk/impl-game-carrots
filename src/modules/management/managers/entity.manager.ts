@@ -53,10 +53,10 @@ export namespace EntityManager {
       current = clone(prototypes);
       return registers(current);
     };
-    const restart = () => handle(initialize());
-    restarts.add(restart);
 
-    return [initialize, restart] as const;
+    restarts.add(() => handle(initialize()));
+
+    return initialize();
   };
 
   export const restart = () => {

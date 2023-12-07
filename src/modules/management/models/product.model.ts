@@ -25,10 +25,7 @@ export namespace Products {
     },
   ];
 
-  const [initialize, restart_] = EntityManager.create(prototypes, (items) => {
+  export let [wheat, flour, tortilla] = EntityManager.create(prototypes, (items) => {
     [wheat, flour, tortilla] = items;
   });
-
-  export const restart = restart_;
-  export let [wheat, flour, tortilla] = initialize();
 }

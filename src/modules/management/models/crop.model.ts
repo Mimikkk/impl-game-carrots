@@ -29,10 +29,7 @@ export namespace Crops {
     },
   ];
 
-  const [initialize, restart_] = EntityManager.create(prototypes, (items) => {
+  export let [wheat] = EntityManager.create(prototypes, (items) => {
     [wheat] = items;
   });
-
-  export const restart = restart_;
-  export let [wheat] = initialize();
 }
