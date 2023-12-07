@@ -77,7 +77,7 @@ const getWaterBalance = createMemo(() => income.water - expense.water);
 const getOilBalance = createMemo(() => income.oil - expense.oil);
 export const balance = {
   get water() {
-    return getGoldBalance();
+    return getWaterBalance();
   },
   get power() {
     return getPowerBalance();

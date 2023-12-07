@@ -4,7 +4,7 @@ import { Modal } from "@components/containers/Modal/Modal.js";
 import { Modals } from "@logic/modals.js";
 import { createSignal } from "solid-js";
 import { DeckIcon, EffectIcon, GoldIcon, LandIcon } from "@shared/logic-components/icons/Icons.js";
-import { InventoryModal } from "@modules/interface/sections/TopRight/InventoryModal.js";
+import { InventoryModal } from "@modules/interface/sections/TopRight/Inventory/InventoryModal.js";
 
 const enum modals {
   Deck = "deck",

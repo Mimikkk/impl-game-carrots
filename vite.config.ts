@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from "vite";
 import solidPlugin from "vite-plugin-solid";
 import path from "path";
@@ -22,5 +23,9 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+  },
+  test: {
+    globals: true,
+    environment: "node",
   },
 });

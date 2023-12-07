@@ -4,16 +4,16 @@ import { Grid } from "@components/containers/Grid/Grid.js";
 import { LandIcon } from "@shared/logic-components/icons/Icons.js";
 import { Number } from "@components/texts/NumberText.js";
 import { Modal } from "@components/containers/Modal/Modal.js";
-import { Item } from "@modules/interface/sections/TopRight/item.js";
+import { Product } from "@modules/management/models/product.model.js";
 import { createQueryable } from "@utils/search.js";
 import { createMemo, createSignal } from "solid-js";
 import cx from "clsx";
 import s from "./InventoryModal.module.scss";
 
-const items: Item[] = [
-  Item.create("land", "Island Island Island Island", 2341231232, 17),
-  Item.create("land", "Island", 2341231232, 34),
-  Item.create("land", "Island", 2341231232, 72),
+const items: Product[] = [
+  Product.create("land", "Island Island Island Island", 2341231232, 17),
+  Product.create("land", "Island", 2341231232, 34),
+  Product.create("land", "Island", 2341231232, 72),
 ];
 
 const { query, queried, setQuery } = createQueryable(items, {
@@ -21,7 +21,7 @@ const { query, queried, setQuery } = createQueryable(items, {
   isCaseSensitive: true,
   keys: ["name"],
 });
-const [selected, select] = createSignal<null | Item>(null);
+const [selected, select] = createSignal<null | Product>(null);
 
 export const InventoryModal = () => (
   <Modal title="Inventory" id={InventoryModal.name} default>
@@ -42,7 +42,7 @@ export const InventoryModal = () => (
   </Modal>
 );
 
-const InventoryItem = (item: Item) => (
+const InventoryItem = (item: Product) => (
   <div onClick={() => select(item)} data-selected={selected() === item} class={s.item}>
     <span title={item.name} class={s.label}>
       {item.name}
@@ -62,7 +62,7 @@ const InventoryControls = () => (
     <Button class="w-full">Sell all</Button>
   </div>
 );
-const InventoryAfter = (items: Item[]) => {
+const InventoryAfter = (items: Product[]) => {
   const total = createMemo(() => items.reduce((total, item) => total + item.count * item.value, 0));
   const types = createMemo(() => items.length);
   const worth = createMemo(() => items.reduce((total, item) => total + item.count, 0));
