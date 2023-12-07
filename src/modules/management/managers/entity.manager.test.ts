@@ -18,6 +18,7 @@ describe("Managers - Entity Manager", () => {
   beforeEach(() => {
     EntityManager.map.clear();
     EntityManager.restarts.clear();
+    EntityManager.restart();
 
     X = {
       prototypes: [{ name: "first" }, { name: "second" }] satisfies X[],
@@ -107,7 +108,17 @@ describe("Managers - Entity Manager", () => {
     expect(item.id?.()).toBe(undefined);
 
     EntityManager.register(item);
+    expect(() => EntityManager.register(item)).throws();
 
     expect(item.id?.()).toBe(1);
+
+    EntityManager.unregister(item);
+    expect(() => EntityManager.unregister(item)).throws();
+
+    expect(item.id?.()).toBe(undefined);
+
+    EntityManager.register(item);
+
+    expect(item.id?.()).toBe(2);
   });
 });
