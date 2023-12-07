@@ -5,22 +5,23 @@ import { describe, expect, it } from "vitest";
 import { EntityManager } from "./entity.manager.js";
 import type { Entity } from "@modules/management/models/traits/entity.trait.js";
 
-interface X {
-  name: string;
-}
-
-interface Y {
-  name: string;
-  dependencies: Entity[];
-}
-
 describe("Managers - Entity Manager", () => {
+  interface X {
+    name: string;
+  }
+
+  interface Y {
+    name: string;
+    dependencies: Entity[];
+  }
+
   beforeEach(() => {
     EntityManager.map.clear();
     EntityManager.restarts.clear();
     EntityManager.restart();
   });
 
+  const { register, unregister, create, restart } = EntityManager;
   it("should correctly restart service with invalidated identifiers", () => {
     const X = {
       prototypes: [{ name: "first" }, { name: "second" }] satisfies X[],
@@ -35,20 +36,20 @@ describe("Managers - Entity Manager", () => {
     expect(X.second()).toBe(-1);
     expect(Y.first()).toBe(-1);
 
-    [X.first, X.second] = EntityManager.create(X.prototypes, (items) => ([X.first, X.second] = items));
-    [Y.first] = EntityManager.create(Y.prototypes, (items) => ([Y.first] = items));
+    [X.first, X.second] = create(X.prototypes, (items) => ([X.first, X.second] = items));
+    [Y.first] = create(Y.prototypes, (items) => ([Y.first] = items));
 
     expect(X.first()).toBe(1);
     expect(X.second()).toBe(2);
     expect(Y.first()).toBe(3);
 
-    EntityManager.restart();
+    restart();
 
     expect(X.first()).toBe(1);
     expect(X.second()).toBe(2);
     expect(Y.first()).toBe(3);
 
-    EntityManager.restart();
+    restart();
 
     expect(X.first()).toBe(1);
     expect(X.second()).toBe(2);
@@ -60,19 +61,19 @@ describe("Managers - Entity Manager", () => {
 
     expect(item.id?.()).toBe(undefined);
 
-    EntityManager.register(item);
+    register(item);
 
-    expect(() => EntityManager.register(item)).throws();
+    expect(() => register(item)).throws();
 
     expect(item.id?.()).toBe(1);
 
-    EntityManager.unregister(item);
+    unregister(item);
 
-    expect(() => EntityManager.unregister(item)).throws();
+    expect(() => unregister(item)).throws();
 
     expect(item.id?.()).toBe(undefined);
 
-    EntityManager.register(item);
+    register(item);
 
     expect(item.id?.()).toBe(2);
   });
