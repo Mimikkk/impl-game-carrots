@@ -15,13 +15,13 @@ describe("Managers - Entity Manager", () => {
     dependencies: Entity[];
   }
 
+  const { map, restarts, register, unregister, create, restart } = EntityManager;
   beforeEach(() => {
-    EntityManager.map.clear();
-    EntityManager.restarts.clear();
-    EntityManager.restart();
+    map.clear();
+    restarts.clear();
+    restart();
   });
 
-  const { register, unregister, create, restart } = EntityManager;
   it("should correctly restart service with invalidated identifiers", () => {
     const X = {
       prototypes: [{ name: "first" }, { name: "second" }] satisfies X[],
