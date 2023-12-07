@@ -3,7 +3,7 @@
  * */
 import { IdentifierManager } from "./identifier.manager.js";
 
-describe("Managers - Identifier Manager", () => {
+describe("[Managers] Identifier Manager", () => {
   const { next, reset } = IdentifierManager;
   beforeEach(reset);
 

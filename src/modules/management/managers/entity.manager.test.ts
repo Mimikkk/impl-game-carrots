@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { EntityManager } from "./entity.manager.js";
 import type { Entity } from "@modules/management/models/traits/entity.trait.js";
 
-describe("Managers - Entity Manager", () => {
+describe("[Managers] Entity Manager", () => {
   interface X {
     name: string;
   }
