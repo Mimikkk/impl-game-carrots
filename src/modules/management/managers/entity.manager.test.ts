@@ -21,7 +21,7 @@ describe("Managers - Entity Manager", () => {
     EntityManager.restart();
   });
 
-  it("should correctly restart service on restart", () => {
+  it("should correctly restart service with invalidated identifiers", () => {
     const X = {
       prototypes: [{ name: "first" }, { name: "second" }] satisfies X[],
       first: () => -1,
@@ -55,7 +55,7 @@ describe("Managers - Entity Manager", () => {
     expect(Y.first()).toBe(3);
   });
 
-  it("should allow for dynamic registration", () => {
+  it("should allow for dynamic registration of a identifier", () => {
     const item = { name: "third" } as X & Partial<Entity>;
 
     expect(item.id?.()).toBe(undefined);
