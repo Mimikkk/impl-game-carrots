@@ -31,12 +31,16 @@ describe("Managers - Entity Manager", () => {
       prototypes: [{ name: "first", dependencies: [{ id: X.first }, { id: X.second }] }] satisfies Y[],
       first: () => -1,
     };
-    EntityManager.create(X.prototypes, (items) => ([X.first, X.second] = items));
-    EntityManager.create(Y.prototypes, (items) => ([Y.first] = items));
-
     expect(X.first()).toBe(-1);
     expect(X.second()).toBe(-1);
     expect(Y.first()).toBe(-1);
+
+    [X.first, X.second] = EntityManager.create(X.prototypes, (items) => ([X.first, X.second] = items));
+    [Y.first] = EntityManager.create(Y.prototypes, (items) => ([Y.first] = items));
+
+    expect(X.first()).toBe(1);
+    expect(X.second()).toBe(2);
+    expect(Y.first()).toBe(3);
 
     EntityManager.restart();
 
