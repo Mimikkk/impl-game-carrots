@@ -5,5 +5,6 @@ export interface Countable {
 }
 
 export namespace Countable {
-  export const read = (): Countable[] => EntityManager.find((item) => "count" in item);
+  export const is = <T extends object>(item: T): item is T & Countable => "count" in item;
+  export const read = (): Countable[] => EntityManager.find(is);
 }

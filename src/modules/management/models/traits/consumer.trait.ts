@@ -7,5 +7,6 @@ export interface Consumer {
 }
 
 export namespace Consumer {
-  export const read = (): Consumer[] => EntityManager.find((item) => "consumes" in item);
+  export const is = <T extends object>(item: T): item is T & Consumer => "consumes" in item;
+  export const read = (): Consumer[] => EntityManager.find(is);
 }

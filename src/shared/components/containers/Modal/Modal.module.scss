@@ -6,10 +6,10 @@
   }
 
   .container {
-    @apply absolute shadow-md shadow-slate-950 min-w-[300px] w-full max-w-[600px];
+    @apply absolute shadow-md shadow-slate-950 min-w-[300px] w-full max-w-[900px];
 
     .card {
-      @apply px-4 h-full transition-all;
+      @apply h-full transition-all;
       @apply flex flex-col gap-1 rounded-t-md rounded-b-sm;
       @apply border-t-4 border-2 border-slate-300;
       @apply bg-slate-950;
@@ -20,12 +20,12 @@
     }
 
     .header {
-      @apply flex justify-between pt-1 gap-2;
+      @apply px-4 flex justify-between pt-1 gap-2;
       @apply bg-gradient-to-b from-slate-800 to-slate-950;
     }
 
     .content {
-      @apply py-2;
+      @apply py-2 px-4;
     }
   }
 }

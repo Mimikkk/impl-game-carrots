@@ -7,5 +7,6 @@ export interface Producer {
 }
 
 export namespace Producer {
-  export const read = (): Producer[] => EntityManager.find((item) => "produces" in item);
+  export const is = <T extends object>(item: T): item is T & Producer => "produces" in item;
+  export const read = (): Producer[] => EntityManager.find(is);
 }
