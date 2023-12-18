@@ -1,21 +1,22 @@
 import { TextField } from "@components/forms/TextField/TextField.js";
 import { Button } from "@components/buttons/Button/Button.js";
 import { Grid } from "@components/containers/Grid/Grid.js";
-import { LandIcon } from "@shared/logic-components/icons/Icons.js";
 import { Number } from "@components/texts/NumberText.js";
 import { Modal } from "@components/containers/Modal/Modal.js";
 import { type Product, Products } from "@modules/management/models/product.model.js";
 import { createQueryable } from "@utils/search.js";
-import { createMemo, createSignal } from "solid-js";
+import { createMemo, createSignal, For, on, Show } from "solid-js";
 import cx from "clsx";
 import s from "./InventoryModal.module.scss";
-import type { Identifier } from "@modules/management/models/traits/entity.trait.js";
+import type { Entity, Identifier } from "@modules/management/models/traits/entity.trait.js";
 import { EntityManager } from "@modules/management/managers/entity.manager.js";
 import { memo } from "@utils/memo.js";
 import { Space } from "@components/texts/Space.js";
+import { type Recipe, Recipes } from "@modules/management/models/recipe.model.js";
+import { Icon, type IconName } from "@components/buttons/Icon/Icon.js";
 
 interface ProductWithCount {
-  product: Product;
+  product: Product & Entity;
   count: number;
 }
 
@@ -25,6 +26,13 @@ export namespace ProductWithCount {
     count,
   });
 }
+
+const iconById = ({ id }: Entity): IconName => {
+  if (id === Products.flour) return "AiFillAlert";
+  if (id === Products.wheat) return "AiFillBank";
+  if (id === Products.tortilla) return "AiFillAmazonCircle";
+  return "IoEarth";
+};
 
 const items: ProductWithCount[] = [
   ProductWithCount.create(Products.flour, 1231217),
@@ -37,7 +45,17 @@ const { query, queried, setQuery } = createQueryable(items, {
   isCaseSensitive: true,
   keys: ["product.name", "product.description"],
 });
-const [selected, select] = createSignal<null | ProductWithCount>(null);
+const [selected, set] = createSignal<null | ProductWithCount>(null);
+const select = (item: ProductWithCount) => set(selected() === item ? null : item);
+const recipes = createMemo(
+  on(selected, (selected) =>
+    selected
+      ? Recipes.list
+          .map<Recipe>(EntityManager.read)
+          .filter((recipe) => recipe.consumes.some((item) => item.id() === selected.product.id()))
+      : [],
+  ),
+);
 
 export const InventoryModal = () => (
   <Modal title="Inventory" id={InventoryModal.name} default>
@@ -55,9 +73,31 @@ export const InventoryModal = () => (
         after={InventoryAfter}
         children={InventoryItem}
       />
-      <div class="col-span-3">
+      <div class={cx("transition-all col-span-3 overflow-auto", selected() ? "h-48" : "h-0")}>
         <div>{selected()?.product.description}</div>
-        <div>{selected()?.product.description}</div>
+        <Show when={recipes().length}>
+          <div class="flex gap-1">
+            <span>
+              <span class="text-amber-300">Recipes:</span>
+              <Space />
+            </span>
+            <For each={recipes()}>
+              {(recipe) => (
+                <button class="flex group transition-all hover:bg-slate-700 rounded-sm px-2">
+                  <For each={recipe.produces}>
+                    {(product) => (
+                      <span class="flex items-center gap-1">
+                        <Icon size={"sm"} name={iconById(product)} />x{product.count}
+                      </span>
+                    )}
+                  </For>
+                  <Space />
+                  <span class="text-amber-300 hover:text-amber-500">{upperFirst(recipe.name)}</span>
+                </button>
+              )}
+            </For>
+          </div>
+        </Show>
       </div>
     </div>
   </Modal>
@@ -71,26 +111,27 @@ const InventoryItem = (item: ProductWithCount) => (
       {upperFirst(item.product.name)}
     </span>
     <div class={cx(s.price, "group transition-all")}>
-      <span class="transition-all w-0 overflow-hidden group-hover:w-12">
+      <span class="text-amber-200 flex items-center justify-between transition-all w-0 overflow-hidden group-hover:w-10">
         Value:
-        <Space />
       </span>
       <Number title={`${item.product.value}`}>{item.product.value}</Number>
     </div>
-    <LandIcon />
+    <Icon size="lg" name={iconById(item.product)} />
     <div class={cx(s.count, "group transition-all")}>
-      <span class="transition-all w-0 overflow-hidden group-hover:w-12">
+      <span class="text-amber-200 flex items-center justify-between transition-all w-0 overflow-hidden group-hover:w-8">
         Held:
-        <Space />
       </span>
       <Number title={`${item.count}`}>{item.count}</Number>
     </div>
   </button>
 );
 const InventoryControls = () => (
-  <div class="flex flex-col self-baseline gap-4">
+  <div class="flex flex-col h-full self-baseline gap-4">
     <TextField label="search..." value={query()} onChange={setQuery} />
     <Button class="w-full">Sell all</Button>
+    <Show when={selected()}>
+      <Button class="mt-auto w-full">Sell selected</Button>
+    </Show>
   </div>
 );
 const InventoryAfter = (items: ProductWithCount[]) => {

@@ -58,7 +58,9 @@ export namespace Recipes {
     },
   ];
 
-  export let [flour, tortilla] = EntityManager.create(prototypes, (items) => {
-    [flour, tortilla] = items;
+  export let list = EntityManager.create(prototypes, (items) => {
+    list = items;
+    [flour, tortilla] = list;
   });
+  export let [flour, tortilla] = list;
 }
