@@ -1,5 +1,5 @@
 import { Icon } from "@components/buttons/Icon/Icon.js";
-import { Number } from "@components/texts/NumberText.js";
+import { Number } from "@components/texts/Number.js";
 import { expense, turn } from "@modules/management/management.js";
 
 interface Props {

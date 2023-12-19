@@ -3,7 +3,7 @@ import { createVirtualizer } from "@tanstack/solid-virtual";
 
 export const createRows = <T>(ref: () => Ref<T>, rows: number, height: number) => {
   const virtualizer = createVirtualizer({
-    getScrollElement: ref,
+    getScrollElement: ref as () => Element | null,
     estimateSize: () => height,
     overscan: 1,
     count: rows,

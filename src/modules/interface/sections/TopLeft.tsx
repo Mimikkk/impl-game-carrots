@@ -1,5 +1,5 @@
 import { Icon } from "@components/buttons/Icon/Icon.js";
-import { Number } from "@components/texts/NumberText.js";
+import { Number } from "@components/texts/Number.js";
 import { balance, resources, type ResourceType, tax, turnsTillTax } from "@modules/management/management.js";
 import { type JSX, Show } from "solid-js";
 import { Space } from "@components/texts/Space.js";

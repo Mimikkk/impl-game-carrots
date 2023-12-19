@@ -2,7 +2,7 @@ import type { JSX } from "solid-js";
 import { mergeProps } from "solid-js";
 import cx from "clsx";
 
-export interface NumberTextProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, "children"> {
+export interface NumberProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, "children"> {
   children: number;
   bold?: boolean;
   precision?: number;
@@ -15,7 +15,7 @@ const format = new Intl.NumberFormat("en-US", {
 }).format;
 
 const initial = { precision: 10e4 } as const;
-export const Number = (props: NumberTextProps) => {
+export const Number = (props: NumberProps) => {
   const $ = mergeProps(initial, props);
 
   return (

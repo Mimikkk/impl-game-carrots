@@ -34,14 +34,14 @@ export const createGrid = (props: GridOptions) =>
           height: `${rowCount * props.sizes.height - props.gap.y}px`,
           width: `${props.columns * props.sizes.width - props.gap.x}px`,
         },
-        item: (row: VirtualItem<unknown>, column: VirtualItem<unknown>) =>
+        item: (row: VirtualItem, column: VirtualItem) =>
           ({
             position: "absolute",
             top: 0,
             width: `${column.size - props.gap.x}px`,
             height: `${row.size - props.gap.y}px`,
             transform: `translate(${column.start}px, ${row.start}px)`,
-          } as const),
+          }) as const,
       } as const,
       items: props.items,
     };
