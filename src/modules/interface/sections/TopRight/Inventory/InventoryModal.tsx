@@ -8,10 +8,24 @@ import { Icon } from "@components/buttons/Icon/Icon.js";
 import { upperfirst } from "@utils/upperfirst.js";
 import { Inventory } from "@modules/interface/sections/TopRight/Inventory/inventory.logic.js";
 import { InventoryGrid } from "@modules/interface/sections/TopRight/Inventory/InventoryGrid.js";
+import { Modals } from "@logic/modals.js";
+import type { Recipe } from "@modules/management/models/recipe.model.js";
+import { String } from "@components/texts/String.js";
 
 const { iconById, recipes, query, setQuery, selected } = Inventory;
+
+const RecipeModal = () => {
+  return (
+    <Modal id={RecipeModal.name}>
+      <div>hehe</div>
+    </Modal>
+  );
+};
+const recipemodal = Modals.signal(RecipeModal.name);
+
 export const InventoryModal = () => (
-  <Modal title="Inventory" id={InventoryModal.name} default>
+  <Modal size="lg" title="Inventory" id={InventoryModal.name} default>
+    <RecipeModal />
     <div class="grid grid-cols-3 gap-4">
       <div class="flex flex-col h-full self-baseline gap-4">
         <TextField label="search..." value={query()} onChange={setQuery} />
@@ -29,24 +43,27 @@ export const InventoryModal = () => (
               <span class="text-amber-300">Recipes:</span>
               <Space />
             </span>
-            <For each={recipes()}>
-              {(recipe) => (
-                <button class="flex group transition-all hover:bg-slate-700 rounded-sm px-2">
-                  <For each={recipe.produces}>
-                    {(product) => (
-                      <span class="flex items-center gap-1">
-                        <Icon size={"sm"} name={iconById(product)} />x{product.count}
-                      </span>
-                    )}
-                  </For>
-                  <Space />
-                  <span class="text-amber-300 hover:text-amber-500">{upperfirst(recipe.name)}</span>
-                </button>
-              )}
-            </For>
+            <For each={recipes()} children={RecipeButton} />
           </div>
         </Show>
       </div>
     </div>
   </Modal>
+);
+
+const RecipeButton = (recipe: Recipe) => (
+  <button
+    onClick={(event) => recipemodal().open({ event })}
+    class="flex group transition-all hover:bg-slate-700 rounded-sm px-2 hover:border-opacity-100 border-opacity-0 border border-amber-300 active:border-amber-500"
+  >
+    <For each={recipe.produces}>
+      {(product) => (
+        <span class="flex items-center gap-1">
+          <Icon size={"sm"} name={iconById(product)} />x{product.count}
+        </span>
+      )}
+    </For>
+    <Space />
+    <String class="transition-all text-amber-300 group-hover:text-amber-400">{upperfirst(recipe.name)}</String>
+  </button>
 );

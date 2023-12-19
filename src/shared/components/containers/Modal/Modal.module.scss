@@ -6,7 +6,19 @@
   }
 
   .container {
-    @apply absolute shadow-md shadow-slate-950 min-w-[300px] w-full max-w-[900px];
+    @apply absolute shadow-md shadow-slate-950;
+
+    &.size-sm {
+      @apply min-h-[150px] max-h-[300px];
+    }
+
+    &.size-md {
+      @apply min-h-[300px] max-h-[600px];
+    }
+
+    &.size-lg {
+      @apply min-h-[600px] max-h-[900px];
+    }
 
     .card {
       @apply h-full transition-all;

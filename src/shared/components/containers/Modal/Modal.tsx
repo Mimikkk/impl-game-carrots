@@ -1,11 +1,11 @@
 import { Portal } from "solid-js/web";
-import type { JSX } from "solid-js";
-import { mergeProps, onCleanup, onMount, Show } from "solid-js";
+import { createEffect, type JSX, mergeProps, onCleanup, onMount, Show } from "solid-js";
 import cx from "clsx";
 import s from "./Modal.module.scss";
 import { Modals } from "@logic/modals.js";
 import { ButtonIcon } from "@components/buttons/ButtonIcon/ButtonIcon.js";
 import { createListener } from "@logic/createListener.js";
+import { createStack } from "@components/containers/Modal/createStack.js";
 
 export interface ModalProps {
   id: string;
@@ -14,11 +14,12 @@ export interface ModalProps {
   default?: boolean;
   onOpen?(): void;
   onClose?(): void;
-  size?: "md";
+  size?: "sm" | "md" | "lg";
   title?: string;
 }
 
-const initial = { default: false } as const;
+const stack = createStack();
+const initial = { default: false, size: "md" } as const;
 export const Modal = (props: ModalProps) => {
   const $ = mergeProps(initial, props);
   const modal = Modals.signal($.id);
@@ -31,16 +32,23 @@ export const Modal = (props: ModalProps) => {
       $.onOpen?.();
       Modals.update();
 
-      createListener("keydown", ({ key }) => key === "Escape" && modal().close());
+      stack.push(modal);
+      if (stack().length > 1) return;
+      createListener("keydown", ({ key }) => key === "Escape" && stack.top().close());
     });
+
     onCleanup(() => {
       $.onClose?.();
       Modals.update();
-      modal().parent()?.focus();
+      stack.pop()!.parent()?.focus();
+    });
+
+    createEffect(() => {
+      console.log({ s: stack(), t: stack.top() });
     });
 
     return (
-      <div inert={false} role="dialog" aria-modal="true" class={cx(s.modal, s[$.size!])}>
+      <div inert={stack.top() !== modal()} role="dialog" aria-modal="true" class={cx(s.modal, s[`size-${$.size}`])}>
         <div onClick={() => modal()?.close()} class={s.background} />
         <div class={cx(s.container, $.class)}>
           <div class={s.card}>
