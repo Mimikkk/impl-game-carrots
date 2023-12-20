@@ -84,14 +84,14 @@ describe("Logic - Modals", () => {
     "should react to some element being opened",
     sfn(async () => {
       Modals.attach(modalId, { default: false });
-      const signal = Modals.signal(modalId);
+      const modal = Modals.read(modalId);
 
       let count = 0;
       createEffect(on(Modals.isSomeOpen, () => ++count));
 
       await vi.waitFor(() => expect(count).toBe(0));
 
-      signal().open();
+      modal.open();
 
       await vi.waitFor(() => expect(count).toBe(1));
     }),
