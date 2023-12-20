@@ -86,11 +86,10 @@ export namespace Modals {
     setStore(id, undefined!);
   };
 
+  const [shouldUpdate, setUpdate] = createSignal(false);
+  export const update = () => setUpdate((value) => !value);
+
   export const isSomeOpen = createMemo(
-    on(
-      () => Object.keys(store).length,
-      () => Object.values(Modals.store).some((modal) => modal.isOpen()),
-      Defer,
-    ),
+    on(shouldUpdate, () => Object.values(Modals.store).some((modal) => modal.isOpen()), Defer),
   );
 }

@@ -30,6 +30,7 @@ export const Modal = (props: ModalProps) => {
   const Content = () => {
     onMount(() => {
       $.onOpen?.();
+      Modals.update();
 
       stack.push(modal);
       if (stack().length > 1) return;
@@ -38,6 +39,7 @@ export const Modal = (props: ModalProps) => {
 
     onCleanup(() => {
       $.onClose?.();
+      Modals.update();
       stack.pop()!.parent()?.focus();
     });
 
