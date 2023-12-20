@@ -90,6 +90,6 @@ export namespace Modals {
   export const update = () => setUpdate((value) => !value);
 
   export const isSomeOpen = createMemo(
-    on(shouldUpdate, () => Object.values(Modals.store).some((modal) => modal.isOpen()), Defer),
+    on(shouldUpdate, () => Object.values(store).some((modal) => modal.isOpen()), Defer),
   );
 }
