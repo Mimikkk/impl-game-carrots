@@ -16,12 +16,12 @@ const { iconById, recipes, query, setQuery, selected } = Inventory;
 
 const RecipeModal = () => {
   return (
-    <Modal id={RecipeModal.name}>
+    <Modal id={RecipeModal.name} title={recipemodal().state.recipe?.name}>
       <div>hehe</div>
     </Modal>
   );
 };
-const recipemodal = Modals.signal(RecipeModal.name);
+const recipemodal = Modals.signal<{ recipe: Recipe }>(RecipeModal.name);
 
 export const InventoryModal = () => (
   <Modal size="lg" title="Inventory" id={InventoryModal.name} default>
@@ -53,7 +53,7 @@ export const InventoryModal = () => (
 
 const RecipeButton = (recipe: Recipe) => (
   <button
-    onClick={(event) => recipemodal().open({ event })}
+    onClick={(event) => recipemodal().open({ event, with: { recipe } })}
     class="flex group transition-all hover:bg-slate-700 rounded-sm px-2 hover:border-opacity-100 border-opacity-0 border border-amber-300 active:border-amber-500"
   >
     <For each={recipe.produces}>

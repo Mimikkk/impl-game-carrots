@@ -1,4 +1,4 @@
-import { type Accessor, createEffect, createMemo, createSignal, on } from "solid-js";
+import { type Accessor, createMemo, createSignal, on } from "solid-js";
 import { createStore, reconcile } from "solid-js/store";
 import { Defer } from "@utils/constants.js";
 
@@ -14,7 +14,7 @@ export interface Modal<State extends {} = any> {
 }
 interface OpenOptions<State> {
   event?: MouseEvent;
-  with_?: State;
+  with?: State;
 }
 
 export namespace Modal {
@@ -38,12 +38,13 @@ export namespace Modal {
         else setOpen((open) => !open);
       },
       open(state) {
-        if (state?.with_) setState(state);
+        if (state?.with) setState(state.with);
         if (state?.event) setParent(state.event.currentTarget as HTMLElement);
         setOpen(true);
       },
       close() {
         setState(reconcile({}));
+        setParent(undefined!);
         return setOpen(false);
       },
     };
@@ -63,10 +64,11 @@ export namespace Modal {
 
 export namespace Modals {
   export const [store, setStore] = createStore<Record<string, Modal>>({});
+  /** Vite bug - check regularly */
+  let _;
 
   export const read = <State extends {}>(id: string): Modal<State> => store[id] ?? Modal.empty;
-  export const signal = <State extends {}>(id: string): Accessor<Modal<State>> =>
-    createMemo(() => store[id] ?? Modal.empty);
+  export const signal = <State extends {}>(id: string): Accessor<Modal<State>> => createMemo(() => read<State>(id));
 
   export interface AttachProps {
     default: boolean;
@@ -84,10 +86,11 @@ export namespace Modals {
     setStore(id, undefined!);
   };
 
-  const [shouldUpdate, setUpdate] = createSignal(false);
-  export const update = () => setUpdate((value) => !value);
-
   export const isSomeOpen = createMemo(
-    on(shouldUpdate, () => Object.values(Modals.store).some((modal) => modal.isOpen()), Defer),
+    on(
+      () => Object.keys(store).length,
+      () => Object.values(Modals.store).some((modal) => modal.isOpen()),
+      Defer,
+    ),
   );
 }

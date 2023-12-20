@@ -1,5 +1,5 @@
 import { Portal } from "solid-js/web";
-import { createEffect, type JSX, mergeProps, onCleanup, onMount, Show } from "solid-js";
+import { type JSX, mergeProps, onCleanup, onMount, Show } from "solid-js";
 import cx from "clsx";
 import s from "./Modal.module.scss";
 import { Modals } from "@logic/modals.js";
@@ -30,7 +30,6 @@ export const Modal = (props: ModalProps) => {
   const Content = () => {
     onMount(() => {
       $.onOpen?.();
-      Modals.update();
 
       stack.push(modal);
       if (stack().length > 1) return;
@@ -39,12 +38,7 @@ export const Modal = (props: ModalProps) => {
 
     onCleanup(() => {
       $.onClose?.();
-      Modals.update();
       stack.pop()!.parent()?.focus();
-    });
-
-    createEffect(() => {
-      console.log({ s: stack(), t: stack.top() });
     });
 
     return (
