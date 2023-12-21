@@ -1,14 +1,68 @@
 .button {
-  @apply flex items-center justify-center;
-  @apply border-4 border-slate-500 bg-slate-800 rounded-sm;
-  @apply shadow-md shadow-slate-800;
+  @apply center px-2;
   @apply transition-all;
 
-  &:hover, &:focus-visible {
-    @apply border-amber-400 bg-slate-700;
+
+  &.size {
+    &-xs {
+      @apply h-6;
+    }
+
+    &-sm {
+      @apply h-8;
+    }
+
+    &-md {
+      @apply h-10;
+    }
+
+    &-lg {
+      @apply h-12;
+    }
+
+    &-xl {
+      @apply h-24;
+    }
+
+    &-2xl {
+      @apply h-36;
+    }
+
+    &-3xl {
+      @apply h-48;
+    }
   }
 
-  &:active {
-    @apply border-amber-500 bg-slate-950
+  &.variant {
+    &-text {
+      @apply border-opacity-0 border border-amber-300 rounded-sm;
+      @apply bg-opacity-0 bg-slate-700;
+
+
+      &:hover, &:focus-visible {
+        @apply shadow-md shadow-slate-700;
+        @apply bg-opacity-40;
+        @apply border-opacity-100;
+      }
+
+      &:active {
+        @apply bg-opacity-60;
+        @apply border-amber-500;
+      }
+    }
+
+    &-contained {
+      @apply border border-slate-500 bg-slate-800 rounded-sm;
+      @apply shadow-md shadow-slate-800;
+
+      &:hover, &:focus-visible {
+        @apply border-amber-400 bg-slate-700;
+      }
+
+      &:active {
+        @apply border-amber-500 bg-slate-950
+      }
+    }
   }
 }
+

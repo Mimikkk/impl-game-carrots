@@ -1,14 +1,14 @@
 /// <reference types="vitest" />
 import { defineConfig } from "vite";
-import solidPlugin from "vite-plugin-solid";
+import solid from "vite-plugin-solid";
 import path from "path";
 
 export default defineConfig({
   base: "./",
-  plugins: [solidPlugin()],
+  plugins: [solid()],
   css: {
     modules: {
-      localsConvention: "camelCaseOnly",
+      localsConvention: "camelCase",
     },
   },
   resolve: {

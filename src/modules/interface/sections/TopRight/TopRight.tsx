@@ -3,8 +3,9 @@ import { Button } from "@components/buttons/Button/Button.js";
 import { Modal } from "@components/containers/Modal/Modal.js";
 import { Modals } from "@logic/modals.js";
 import { createSignal } from "solid-js";
-import { DeckIcon, EffectIcon, GoldIcon, LandIcon } from "@shared/logic-components/icons/Icons.js";
+import { DeckIcon, GoldIcon, LandIcon } from "@shared/logic-components/icons/Icons.js";
 import { InventoryModal } from "@modules/interface/sections/TopRight/Inventory/InventoryModal.js";
+import { ButtonIcon } from "@components/buttons/ButtonIcon/ButtonIcon.js";
 
 const enum modals {
   Deck = "deck",
@@ -26,26 +27,29 @@ export const TopRight = (props: Props) => {
   return (
     <section class={cx(props.class)}>
       <div class="flex gap-2">
-        <Button square class={cx(landMode() && "!border-amber-600")} onClick={() => toggleLandMode()}>
+        <Button square class={cx("h-8 w-8", landMode() && "!border-amber-600")} onClick={() => toggleLandMode()}>
           <LandIcon />
         </Button>
         <Button
           square
-          class={cx(inventory().isOpen() && "!border-amber-300")}
+          class={cx("h-8 w-8", inventory().isOpen() && "!border-amber-300")}
           onClick={(event) => inventory().open({ event })}
         >
           <GoldIcon />
         </Button>
-        <Button square class={cx(deck().isOpen() && "!border-amber-300")} onClick={(event) => deck().open({ event })}>
-          <DeckIcon />
-        </Button>
         <Button
           square
-          class={cx(effects().isOpen() && "!border-amber-300")}
-          onClick={(event) => effects().open({ event })}
+          class={cx("h-8 w-8", deck().isOpen() && "!border-amber-300")}
+          onClick={(event) => deck().open({ event })}
         >
-          <EffectIcon />
+          <DeckIcon />
         </Button>
+        <ButtonIcon
+          onClick={(event) => effects().open({ event })}
+          icon="BiSolidBookBookmark"
+          active={effects().isOpen()}
+          iconclass="stroke-2 stroke-amber-100 fill-blue-700"
+        />
       </div>
       <InventoryModal />
       <Modal title="Deck" id={modals.Deck}>

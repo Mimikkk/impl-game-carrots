@@ -17,6 +17,7 @@ import * as WiRegistry from "solid-icons/wi";
 import type { IconProps as SolidIconProps } from "solid-icons";
 import cx from "clsx";
 import { mergeProps, splitProps } from "solid-js";
+import s from "./Icon.module.scss";
 
 export type IconName =
   | keyof typeof CgRegistry
@@ -36,6 +37,7 @@ export type IconName =
   | keyof typeof VsRegistry
   | keyof typeof WiRegistry;
 export type IconSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
+console.time("h");
 export const IconRegistry = Object.assign(
   {},
   CgRegistry,
@@ -55,37 +57,18 @@ export const IconRegistry = Object.assign(
   VsRegistry,
   WiRegistry,
 );
+console.timeEnd("h");
 
 export interface IconProps extends SolidIconProps {
   name: IconName;
   size?: IconSize;
 }
 
-const classBySize = (size?: IconSize) => {
-  switch (size) {
-    case "xs":
-      return "w-4 h-4";
-    case "sm":
-      return "w-5 h-5";
-    case "md":
-      return "w-6 h-6";
-    case "lg":
-      return "w-8 h-8";
-    case "xl":
-      return "w-10 h-10";
-    case "2xl":
-      return "w-12 h-12";
-    case "3xl":
-      return "w-14 h-14";
-    default:
-      return undefined;
-  }
-};
-
-const initial = { size: "md" } as const;
+const keys = ["size", "class"] satisfies (keyof IconProps)[];
+const initial = { size: "md" } satisfies Partial<IconProps>;
 export const Icon = (props: IconProps) => {
-  const [$, rest] = splitProps(mergeProps(initial, props), ["size", "class"]);
+  const [icon, $] = splitProps(mergeProps(initial, props), keys);
   const Element = IconRegistry[props.name];
 
-  return <Element class={cx(classBySize($.size), $.class)} {...rest} />;
+  return <Element class={cx(s[`size-${icon.size}`], icon.class)} {...$} />;
 };

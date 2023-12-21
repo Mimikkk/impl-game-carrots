@@ -1,0 +1,74 @@
+.button {
+  @apply center gap-2 aspect-square;
+  @apply rounded-full transition-all;
+  @apply text-white;
+
+
+  &.size {
+    &-xs {
+      @apply h-5 text-xs;
+    }
+
+    &-sm {
+      @apply h-6 text-sm;
+    }
+
+    &-md {
+      @apply h-8;
+    }
+
+    &-lg {
+      @apply h-10 text-lg;
+    }
+
+    &-xl {
+      @apply h-14 text-xl;
+    }
+
+    &-2xl {
+      @apply h-24 text-2xl;
+    }
+
+    &-3xl {
+      @apply h-36 text-3xl;
+    }
+  }
+
+  &.variant {
+    &-text {
+      @apply border-opacity-0 border border-amber-300;
+      @apply bg-opacity-0 bg-slate-700;
+      @apply rounded-full;
+
+      &:hover, &:focus-visible {
+        @apply shadow-md;
+
+        @apply border-opacity-100;
+        @apply bg-opacity-40;
+        @apply text-amber-100;
+      }
+
+      &:active {
+        @apply bg-opacity-60;
+      }
+
+      &[data-active] {
+        @apply bg-white;
+      }
+    }
+
+
+    &-contained {
+      @apply border border-slate-500 bg-slate-800 rounded-sm;
+      @apply shadow-md shadow-slate-800;
+
+      &:hover, &:focus-visible {
+        @apply border-amber-400 bg-slate-700;
+      }
+
+      &:active {
+        @apply border-amber-500 bg-slate-950
+      }
+    }
+  }
+}
