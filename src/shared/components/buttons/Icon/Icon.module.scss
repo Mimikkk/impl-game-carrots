@@ -1,5 +1,7 @@
 .icon {
   @apply center gap-2 aspect-square;
+  @apply stroke-2 stroke-amber-100;
+
 
   &.size {
     &-xs {

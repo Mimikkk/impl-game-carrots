@@ -50,7 +50,7 @@ const RecipeModal = () => {
 const recipemodal = Modals.signal<{ recipe: Recipe }>(RecipeModal.name);
 
 export const InventoryModal = () => (
-  <Modal size="lg" title="Inventory" id={InventoryModal.name} default>
+  <Modal size="lg" title="Inventory" id={InventoryModal.name}>
     <RecipeModal />
     <div class="grid grid-cols-3 gap-4">
       <div class="flex flex-col h-full self-baseline gap-4">

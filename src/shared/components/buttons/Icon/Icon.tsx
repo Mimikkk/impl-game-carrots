@@ -36,8 +36,6 @@ export type IconName =
   | keyof typeof TiRegistry
   | keyof typeof VsRegistry
   | keyof typeof WiRegistry;
-export type IconSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
-console.time("h");
 export const IconRegistry = Object.assign(
   {},
   CgRegistry,
@@ -57,7 +55,7 @@ export const IconRegistry = Object.assign(
   VsRegistry,
   WiRegistry,
 );
-console.timeEnd("h");
+export type IconSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
 
 export interface IconProps extends SolidIconProps {
   name: IconName;
@@ -70,5 +68,5 @@ export const Icon = (props: IconProps) => {
   const [icon, $] = splitProps(mergeProps(initial, props), keys);
   const Element = IconRegistry[props.name];
 
-  return <Element class={cx(s[`size-${icon.size}`], icon.class)} {...$} />;
+  return <Element class={cx(s.icon, s[`size-${icon.size}`], icon.class)} {...$} />;
 };

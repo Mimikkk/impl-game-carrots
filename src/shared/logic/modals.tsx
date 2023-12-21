@@ -8,7 +8,7 @@ export interface Modal<State extends {} = any> {
   setState(state: State): void;
   isOpen(): boolean;
   setOpen(open: boolean): void;
-  open(options?: OpenOptions<State>): void;
+  open(options?: OpenOptions<State> | MouseEvent): void;
   toggle(open?: any): void;
   close(): void;
 }
@@ -38,8 +38,12 @@ export namespace Modal {
         else setOpen((open) => !open);
       },
       open(state) {
-        if (state?.with) setState(state.with);
-        if (state?.event) setParent(state.event.currentTarget as HTMLElement);
+        if (state instanceof MouseEvent) {
+          setParent(state.currentTarget as HTMLElement);
+        } else {
+          if (state?.with) setState(state.with);
+          if (state?.event) setParent(state.event.currentTarget as HTMLElement);
+        }
         setOpen(true);
       },
       close() {

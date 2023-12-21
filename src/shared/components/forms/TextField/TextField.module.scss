@@ -1,8 +1,17 @@
 .field {
   @apply relative px-2 py-1 border rounded-sm;
+  @apply transition-all;
 
   .label {
     @apply absolute transition-all;
+  }
+
+  &:hover {
+    @apply border-amber-100;
+
+    .label {
+      @apply bg-slate-950 text-amber-200;
+    }
   }
 
   &:has(.input:not(:placeholder-shown)), &:focus-within {
@@ -12,7 +21,6 @@
       @apply top-0 -mt-2 -ml-1.5;
       @apply px-1;
       @apply bg-slate-950 text-amber-300 text-xs;
-      @apply text-amber-300;
     }
   }
 

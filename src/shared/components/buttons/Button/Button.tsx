@@ -5,7 +5,7 @@ import s from "./Button.module.scss";
 export interface ButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
   square?: boolean;
   size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
-  variant?: "text" | "outlined" | "contained";
+  variant?: "text" | "contained";
 }
 
 const keys = ["square", "size", "variant", "class"] satisfies (keyof ButtonProps)[];

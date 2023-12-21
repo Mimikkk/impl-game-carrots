@@ -35,7 +35,7 @@ export const AvailableIconsTab = () => {
         sizes={{ width: 64, height: 64 }}
         gap={4}
       >
-        {(name) => <Icon class={s.icon} name={name} onPointerEnter={() => setTooltip(name)} />}
+        {(name) => <Icon class="w-full" name={name} onPointerEnter={() => setTooltip(name)} />}
       </Grid>
     </div>
   );

@@ -10,7 +10,7 @@ export interface ButtonIconProps extends JSX.ButtonHTMLAttributes<HTMLButtonElem
   size?: ButtonSize;
   icon: IconName;
   iconclass?: string;
-  variant?: "text" | "outlined" | "contained";
+  variant?: "text" | "contained";
   active?: boolean;
 }
 
@@ -22,6 +22,7 @@ const keys = [
   "class",
   "children",
   "variant",
+  "active",
 ] satisfies (keyof ButtonIconProps)[];
 const initial = { variant: "contained", size: "md" } satisfies Partial<ButtonIconProps>;
 export const ButtonIcon = (props: ButtonIconProps) => {

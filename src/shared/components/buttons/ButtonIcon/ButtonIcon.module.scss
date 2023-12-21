@@ -3,7 +3,6 @@
   @apply rounded-full transition-all;
   @apply text-white;
 
-
   &.size {
     &-xs {
       @apply h-5 text-xs;
@@ -53,7 +52,11 @@
       }
 
       &[data-active] {
-        @apply bg-white;
+        @apply border-amber-300;
+
+        &:hover {
+          @apply border-amber-500;
+        }
       }
     }
 
@@ -68,6 +71,14 @@
 
       &:active {
         @apply border-amber-500 bg-slate-950
+      }
+
+      &[data-active] {
+        @apply border-amber-300;
+
+        &:hover {
+          @apply border-amber-500;
+        }
       }
     }
   }

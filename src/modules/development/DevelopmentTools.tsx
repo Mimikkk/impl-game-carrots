@@ -21,7 +21,7 @@ export const DevelopmentTools = () => {
     <div class={s.tools}>
       <div class={s.container}>
         <div class={s.expand}>
-          <ButtonIcon icon="CgToolbox" square class={s.expander} onClick={toggle} />
+          <ButtonIcon icon="CgToolbox" variant="text" class={s.expander} onClick={toggle} />
         </div>
       </div>
       <div class={s.tabs} data-active={active()}>
