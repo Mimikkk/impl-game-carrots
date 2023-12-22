@@ -11,8 +11,6 @@ import { InventoryGrid } from "@modules/interface/sections/TopRight/Inventory/In
 import { Modals } from "@logic/modals.js";
 import type { Recipe } from "@modules/management/models/recipe.model.js";
 import { String } from "@components/texts/String.js";
-import { EntityManager } from "@modules/management/managers/entity.manager.js";
-import type { Product } from "@modules/management/models/product.model.js";
 import type { Entity } from "@modules/management/models/traits/entity.trait.js";
 import type { Countable } from "@modules/management/models/traits/countable.trait.js";
 
@@ -21,26 +19,18 @@ const { iconById, recipes, query, setQuery, selected } = Inventory;
 const RecipeModal = () => {
   const recipe = createMemo(() => recipemodal().state?.recipe!);
 
+  const title = createMemo(() => `Recipe${recipe() ? ` - ${upperfirst(recipe().name)}` : ""}`);
+
   return (
-    <Modal size="sm" id={RecipeModal.name} title={`Recipe${recipe() ? ` - ${upperfirst(recipe().name)}` : ""}`}>
+    <Modal size="sm" id={RecipeModal.name} title={title()}>
       <Show when={recipe()}>
-        <div>{recipe().name}</div>
         <div>{recipe().description}</div>
         <div class="center-y gap-2">
           <span>Produces:</span>
           <div>
-            {recipe().produces.map(({ id, count }) => {
-              const product = EntityManager.read<Product>(id);
-              const { name, value } = product;
-
-              return (
-                <div class="flex items-center gap-1">
-                  <Icon name={iconById(product)} />
-                  <span>x{count}</span>
-                  <span>{name}</span>
-                </div>
-              );
-            })}
+            <For each={recipe().produces}>
+              {(countable) => <CountableLabel countable={countable} />}
+            </For>
           </div>
         </div>
       </Show>
@@ -50,7 +40,7 @@ const RecipeModal = () => {
 const recipemodal = Modals.signal<{ recipe: Recipe }>(RecipeModal.name);
 
 export const InventoryModal = () => (
-  <Modal size="lg" title="Inventory" id={InventoryModal.name}>
+  <Modal size="lg" title="Inventory" id={InventoryModal.name} default>
     <RecipeModal />
     <div class="grid grid-cols-3 gap-4">
       <div class="flex flex-col h-full self-baseline gap-4">

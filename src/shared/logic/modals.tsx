@@ -38,18 +38,18 @@ export namespace Modal {
         else setOpen((open) => !open);
       },
       open(state) {
-        if (state instanceof MouseEvent) {
+        if (state instanceof Event) {
           setParent(state.currentTarget as HTMLElement);
         } else {
           if (state?.with) setState(state.with);
           if (state?.event) setParent(state.event.currentTarget as HTMLElement);
         }
+
         setOpen(true);
       },
       close() {
         setState(reconcile({}));
-        setParent(undefined!);
-        return setOpen(false);
+        setOpen(false);
       },
     };
   };

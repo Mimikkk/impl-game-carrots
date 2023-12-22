@@ -12,8 +12,11 @@ export interface ModalProps {
   class?: string;
   children: JSX.Element;
   default?: boolean;
+
   onOpen?(): void;
+
   onClose?(): void;
+
   size?: "sm" | "md" | "lg";
   title?: string;
 }
@@ -40,11 +43,12 @@ export const Modal = (props: ModalProps) => {
     onCleanup(() => {
       $.onClose?.();
       Modals.update();
+
       stack.pop()!.parent()?.focus();
     });
 
     return (
-      <div inert={stack.top() !== modal()} role="dialog" aria-modal="true" class={cx(s.modal, s[`size-${$.size}`])}>
+      <div inert={stack.top() !== modal()} role="dialog" aria-modal class={cx(s.modal, s[`size-${$.size}`])}>
         <div onClick={() => modal()?.close()} class={s.background} />
         <div class={cx(s.container, $.class)}>
           <div class={s.card}>
@@ -52,7 +56,7 @@ export const Modal = (props: ModalProps) => {
               <span class="font-bold text-slate-200">{$.title}</span>
               <ButtonIcon
                 icon="OcX"
-                class="text-slate-200"
+                variant="text"
                 onClick={() => {
                   modal().close();
                   modal().parent()?.focus();
