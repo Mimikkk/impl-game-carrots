@@ -1,5 +1,5 @@
 export const debounce = <This, Func extends (this: This, ...args: any) => any>(fn: Func, ms: number) => {
-  let timeoutId: undefined | number = undefined;
+  let timeoutId: NodeJS.Timeout | undefined = undefined;
   let lastCallMs = 0;
   let args: Parameters<Func>;
   let context: This;
@@ -16,7 +16,7 @@ export const debounce = <This, Func extends (this: This, ...args: any) => any>(f
     timeoutId = setTimeout(run, differenceMs);
   };
 
-  return function (this: This, ...passed: Parameters<Func>) {
+  return function(this: This, ...passed: Parameters<Func>) {
     args = passed;
     context = this;
 
