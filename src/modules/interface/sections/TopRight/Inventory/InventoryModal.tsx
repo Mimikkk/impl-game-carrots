@@ -6,13 +6,13 @@ import cx from "clsx";
 import { Space } from "@components/texts/Space.js";
 import { Icon } from "@components/buttons/Icon/Icon.js";
 import { upperfirst } from "@utils/upperfirst.js";
-import { Inventory } from "@modules/interface/sections/TopRight/Inventory/inventory.logic.js";
 import { InventoryGrid } from "@modules/interface/sections/TopRight/Inventory/InventoryGrid.js";
 import { Modals } from "@logic/modals.js";
 import type { Recipe } from "@modules/management/models/recipe.model.js";
 import { String } from "@components/texts/String.js";
 import type { Entity } from "@modules/management/models/traits/entity.trait.js";
 import type { Countable } from "@modules/management/models/traits/countable.trait.js";
+import { Inventory } from "@modules/management/inventory.logic.js";
 
 const { iconById, recipes, query, setQuery, selected } = Inventory;
 

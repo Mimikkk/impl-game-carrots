@@ -11,6 +11,7 @@ export namespace Inventory {
     product: Product & Entity;
     count: number;
   }
+
   export namespace ProductWithCount {
     export const create = (id: Identifier, count: number): ProductWithCount => ({
       product: EntityManager.read(id),

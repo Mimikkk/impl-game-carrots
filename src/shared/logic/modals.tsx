@@ -5,13 +5,20 @@ import { Defer } from "@utils/constants.js";
 export interface Modal<State extends {} = any> {
   parent: Accessor<HTMLElement>;
   state: State;
+
   setState(state: State): void;
+
   isOpen(): boolean;
+
   setOpen(open: boolean): void;
+
   open(options?: OpenOptions<State> | MouseEvent): void;
+
   toggle(open?: any): void;
+
   close(): void;
 }
+
 interface OpenOptions<State> {
   event?: MouseEvent;
   with?: State;
@@ -57,11 +64,16 @@ export namespace Modal {
   export const empty: Modal = {
     parent: () => undefined!,
     isOpen: () => false,
-    toggle() {},
-    close() {},
-    open() {},
-    setOpen() {},
-    setState() {},
+    toggle() {
+    },
+    close() {
+    },
+    open() {
+    },
+    setOpen() {
+    },
+    setState() {
+    },
     state: {},
   };
 }
@@ -77,6 +89,7 @@ export namespace Modals {
   export interface AttachProps {
     default: boolean;
   }
+
   export const attach = (id: string, props: AttachProps) => {
     if (id in store) throw Error(`Modal with id '${id}' already exists`);
 

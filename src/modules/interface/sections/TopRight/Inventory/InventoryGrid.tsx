@@ -7,7 +7,7 @@ import { Icon } from "@components/buttons/Icon/Icon.js";
 import { LabelText } from "@components/texts/LabelText.js";
 import { String } from "@components/texts/String.js";
 import { upperfirst } from "@utils/upperfirst.js";
-import { Inventory } from "@modules/interface/sections/TopRight/Inventory/inventory.logic.js";
+import { Inventory } from "@modules/management/inventory.logic.js";
 
 const { iconById, queried, selected, select } = Inventory;
 export const InventoryGrid = () => (
