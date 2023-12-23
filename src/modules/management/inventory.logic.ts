@@ -3,8 +3,9 @@ import type { Entity, Identifier } from "@modules/management/models/traits/entit
 import { EntityManager } from "@modules/management/managers/entity.manager.js";
 import type { IconName } from "@components/buttons/Icon/Icon.js";
 import { createQueryable } from "@utils/search.js";
-import { createMemo, createSignal, on } from "solid-js";
+import { createEffect, createMemo, createSignal, on } from "solid-js";
 import { RecipeManager } from "@modules/management/managers/recipe.manager.js";
+import Fuse from "fuse.js";
 
 export namespace Inventory {
   export interface ProductWithCount {
@@ -26,17 +27,18 @@ export namespace Inventory {
     return "IoEarth";
   };
 
-  export const items: ProductWithCount[] = [
+  export const [items, setItems] = createSignal<ProductWithCount[]>([
     ProductWithCount.create(Products.flour, 1231217),
     ProductWithCount.create(Products.wheat, 3123214),
     ProductWithCount.create(Products.tortilla, 72),
-  ];
+  ]);
 
-  export const { query, queried, setQuery } = createQueryable(items, {
+  export const { queried, query, setQuery } = createQueryable(items, {
     threshold: 0.4,
     isCaseSensitive: true,
     keys: ["product.name", "product.description"],
   });
+
   export const [selected, set] = createSignal<null | ProductWithCount>(null);
   export const select = (item: ProductWithCount) => set(selected() === item ? null : item);
   export const recipes = createMemo(

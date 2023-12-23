@@ -9,14 +9,14 @@ import { String } from "@components/texts/String.js";
 import { upperfirst } from "@utils/upperfirst.js";
 import { Inventory } from "@modules/management/inventory.logic.js";
 
-const { iconById, queried, selected, select } = Inventory;
+const { iconById, selected, select } = Inventory;
 export const InventoryGrid = () => (
   <Grid
     class="border rounded-sm box-content p-3"
     containerclass="col-span-2"
     itemclass="overflow-visible"
     gap={12}
-    items={queried()}
+    items={Inventory.queried()}
     rows={4}
     columns={4}
     sizes={{ height: 64, width: 124 }}

@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700');
-@import url('https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@300;400;500;600;700');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700');
+@import url('https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@300;400;500;600;700');
+
 @layer utilities {
   .center {
     @apply flex items-center justify-center;

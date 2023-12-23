@@ -14,7 +14,7 @@ import type { Entity } from "@modules/management/models/traits/entity.trait.js";
 import type { Countable } from "@modules/management/models/traits/countable.trait.js";
 import { Inventory } from "@modules/management/inventory.logic.js";
 
-const { iconById, recipes, query, setQuery, selected } = Inventory;
+const { iconById, recipes, selected } = Inventory;
 
 const RecipeModal = () => {
   const recipe = createMemo(() => recipemodal().state?.recipe!);
@@ -28,9 +28,7 @@ const RecipeModal = () => {
         <div class="center-y gap-2">
           <span>Produces:</span>
           <div>
-            <For each={recipe().produces}>
-              {(countable) => <CountableLabel countable={countable} />}
-            </For>
+            <For each={recipe().produces}>{(countable) => <CountableLabel countable={countable} />}</For>
           </div>
         </div>
       </Show>
@@ -44,10 +42,26 @@ export const InventoryModal = () => (
     <RecipeModal />
     <div class="grid grid-cols-3 gap-4">
       <div class="flex flex-col h-full self-baseline gap-4">
-        <TextField label="search..." value={query()} onChange={setQuery} />
-        <Button class="w-full">Sell all</Button>
+        <TextField label="search..." value={Inventory.query()} onChange={Inventory.setQuery} />
+        <Button
+          class="w-full"
+          onClick={() => {
+            Inventory.setItems([]);
+          }}
+        >
+          Sell all
+        </Button>
         <Show when={selected()}>
-          <Button class="mt-auto w-full">Sell selected</Button>
+          <Button
+            class="mt-auto w-full"
+            onClick={() => {
+              if (!selected()) return;
+
+              Inventory.setItems((items) => items.filter((item) => item !== selected()));
+            }}
+          >
+            Sell selected
+          </Button>
         </Show>
       </div>
       <InventoryGrid />
