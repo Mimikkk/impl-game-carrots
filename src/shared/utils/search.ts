@@ -1,6 +1,6 @@
 import type { FuseResult, IFuseOptions } from "fuse.js";
 import Fuse from "fuse.js";
-import { type Accessor, createEffect, createMemo, createRenderEffect, createSignal, on, type Setter } from "solid-js";
+import { type Accessor, createEffect, createMemo, createSignal, on, type Setter } from "solid-js";
 import { Defer } from "@utils/constants.js";
 
 const extract = <T>({ item }: FuseResult<T>) => item;

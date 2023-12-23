@@ -4,6 +4,7 @@ import { Modals } from "@logic/modals.js";
 import { createSignal } from "solid-js";
 import { InventoryModal } from "@modules/interface/sections/TopRight/Inventory/InventoryModal.js";
 import { ButtonIcon } from "@components/buttons/ButtonIcon/ButtonIcon.js";
+import { MainMenu } from "@modules/management/mainmenu.logic.js";
 
 const enum modals {
   Deck = "deck",
@@ -19,8 +20,8 @@ const toggleLandMode = () => setLandMode((value) => !value);
 
 export const TopRight = (props: Props) => {
   const inventory = Modals.signal(InventoryModal.name);
-  const deck = Modals.signal(modals.Deck);
   const effects = Modals.signal(modals.Effects);
+  const deck = Modals.signal(modals.Deck);
 
   return (
     <section class={cx(props.class)}>
@@ -44,6 +45,7 @@ export const TopRight = (props: Props) => {
           active={effects().isOpen()}
           iconclass="fill-blue-700"
         />
+        <ButtonIcon onClick={MainMenu.open} icon="CgMenuLeftAlt" active={MainMenu.isOpen()} />
       </div>
       <InventoryModal />
       <Modal title="Deck" id={modals.Deck}>

@@ -1,5 +1,7 @@
 import { createEffect, createMemo, createSignal, on } from "solid-js";
 import { createStore } from "solid-js/store";
+import { createStorage } from "@logic/Storage/createStorage.js";
+import { Modals } from "@logic/modals.js";
 
 export type ResourceType = "water" | "power" | "gold" | "oil";
 
@@ -89,3 +91,5 @@ export const balance = {
     return getOilBalance();
   },
 };
+
+export const openMainMenu = (event: MouseEvent) => Modals.read("main-menu").open({ event });
