@@ -6,6 +6,7 @@ import { Modal } from "@components/containers/Modal/Modal.js";
 import { MainMenu } from "@modules/management/mainmenu.logic.js";
 import type { JSX } from "solid-js";
 import { Button } from "@components/buttons/Button/Button.js";
+import { Game } from "@modules/interface/game/Game.js";
 
 const Menu = (props: { children: JSX.Element }) => {
   return <div class="flex flex-col gap-2">{props.children}</div>;
@@ -27,6 +28,7 @@ const MenuModal = () => (
 export const GameInterface = () => (
   <div class="fixed full">
     <MenuModal />
+    <Game />
     <TopLeft class="atl-4" />
     <BottomLeft class="abl-4" />
     <TopRight class="atr-4" />
