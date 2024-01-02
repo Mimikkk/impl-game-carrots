@@ -15,13 +15,7 @@ const MenuItem = (props: { children: JSX.Element }) => <Button>{props.children}<
 Menu.Item = MenuItem;
 
 const MenuModal = () => (
-  <Modal
-    title="Menu główne"
-    controlless
-    id={MainMenu.Id}
-    default={MainMenu.openOnStartup()}
-    onChange={MainMenu.setOpenOnStartup}
-  >
+  <Modal title="Menu główne" id={MainMenu.Id} default={MainMenu.openOnStartup()} onChange={MainMenu.setOpenOnStartup}>
     <Menu>
       <Menu.Item>1</Menu.Item>
       <Menu.Item>2</Menu.Item>
