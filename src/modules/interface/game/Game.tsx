@@ -1,6 +1,6 @@
 import * as Three from "three";
-import { Vector2 } from "three";
-import { createSignal, onCleanup } from "solid-js";
+import { Vector2, Vector3 } from "three";
+import { createSignal, onCleanup, Show } from "solid-js";
 import WaterShaderFs from "./watershader.fragment.glsl?raw";
 import WaterShaderVs from "./watershader.vertex.glsl?raw";
 import { createListener } from "@logic/createListener.js";
@@ -11,8 +11,25 @@ namespace WaterShader {
 
   export const create = () => {
     const uniforms = {
-      iGlobalTime: { value: 0.1 },
-      iResolution: { value: new Vector2(window.innerWidth, window.innerHeight) },
+      globals: {
+        value: {
+          time: 0.1,
+          resolution: new Vector2(window.innerWidth, window.innerHeight),
+        },
+      },
+      configuration: {
+        value: {
+          iterations_height: 3,
+          iterations_geometry: 3,
+          iterations_fragment: 3,
+          height: 0.5,
+          choppy: 4.0,
+          speed: 4,
+          frequency: 0.16,
+          level_color: new Vector3(0.06, 0.2, 0.3),
+          water_color: new Vector3(0.6, 0.1, 0.6),
+        },
+      },
     };
 
     const material = new Three.ShaderMaterial({ uniforms, vertexShader: vs, fragmentShader: fs });
@@ -26,7 +43,7 @@ const [isRunning, setIsRunning] = createSignal(true);
 const createRenderer = (canvas: HTMLCanvasElement) => {
   const clock = new Three.Clock();
   const scene = new Three.Scene();
-  const camera = new Three.PerspectiveCamera(120, window.innerWidth / window.innerHeight, 0, 0);
+  const camera = new Three.PerspectiveCamera(120, window.innerWidth / window.innerHeight, 0.1, 1000);
   const { uniforms, material } = WaterShader.create();
   const water = new Three.Mesh(new Three.PlaneGeometry(window.innerWidth, window.innerHeight), material);
 
@@ -43,7 +60,7 @@ const createRenderer = (canvas: HTMLCanvasElement) => {
   renderer.setAnimationLoop(() => {
     if (!isRunning()) {
     } else {
-      uniforms.iGlobalTime.value += clock.getDelta();
+      uniforms.globals.value.time += clock.getDelta();
     }
 
     renderer.render(scene, camera);
@@ -78,6 +95,14 @@ export const Game = () => {
       >
         Your browser does not support the HTML5 canvas tag.
       </canvas>
+      <Show when={!isRunning()}>
+        <div class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+          <div class="bg-slate-800 p-4 rounded-sm border-t-2 border-amber-300 shadow">
+            <p class="text-2xl text-white">Paused</p>
+            <p class="text-lg text-white">Press P to continue</p>
+          </div>
+        </div>
+      </Show>
     </div>
   );
 };
