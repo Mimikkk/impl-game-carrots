@@ -13,7 +13,7 @@ namespace WaterShader {
     const uniforms = {
       globals: {
         value: {
-          time: 0.1,
+          time: 100000,
           resolution: new Vector2(window.innerWidth, window.innerHeight),
         },
       },
@@ -24,7 +24,7 @@ namespace WaterShader {
           iterations_fragment: 3,
           height: 0.5,
           choppy: 4.0,
-          speed: 4,
+          speed: 2,
           frequency: 0.16,
           level_color: new Vector3(0.06, 0.2, 0.3),
           water_color: new Vector3(0.6, 0.1, 0.6),
